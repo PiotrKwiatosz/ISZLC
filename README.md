@@ -1,8 +1,8 @@
 # ISZLC
-pol. 
+(pol. Informatyczny System Zarzadzania Lekami Cytotoksycznymi)
 
 
-eng. IT System for the Management of Cytotoxic Drugs
+IT System for the Management of Cytotoxic Drugs
 
     • Doctor module
     • Pharmacist module
@@ -27,11 +27,11 @@ will provide clear, complete prescriptions that will be automatically sent to th
 
 By connecting to the physician prescription module, it will allow the cytotoxic laboratory to:
 
-◦   see the workload for this day and future days and plan your work accordingly.
-◦   automatically prioritize the most urgent prescriptions,
-◦   provide supervision over the processes (monitored and analyzed, which may enable the identification of problems)
-◦   real-time supervision of drug stocks in the laboratory
-◦   will advise the pharmacist to use the appropriate vial size and the stability date of the preparation.
+    •   see the workload for this day and future days and plan your work accordingly.
+    •   automatically prioritize the most urgent prescriptions,
+    •   provide supervision over the processes (monitored and analyzed, which may enable the identification of problems)
+    •   real-time supervision of drug stocks in the laboratory
+    •   will advise the pharmacist to use the appropriate vial size and the stability date of the preparation.
 
 All this will allow the laboratory staff to focus on clinical work, audit and quality management.
 
