@@ -12,8 +12,7 @@ IT System for the Management of Cytotoxic Drugs
 
 Need of a solution to streamline the management process in a hospital pharmacy where is located a cytotoxic drug laboratory.
 
-    The process of document flow in the work of a hospital department and pharmacy - 
-Laboratory of cytotoxic drugs
+    The process of document flow in the work of a hospital department and pharmacy - Laboratory of cytotoxic drugs
 
 Manual rewriting and documenting can lead to illegibility issues as well as transcription and processing errors. There is also a risk of losing documents, multiple copies and incomplete documentation.
 
