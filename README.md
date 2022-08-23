@@ -1,5 +1,5 @@
 # ISZLC 
-# (pol. Informatyczny System Zarzadzania Lekami Cytotoksycznymi)
+(pol. Informatyczny System Zarzadzania Lekami Cytotoksycznymi)
 
 
 IT System for the Management of Cytotoxic Drugs
