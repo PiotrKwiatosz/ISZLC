@@ -1,12 +1,12 @@
 # ISZLC 
-(pol. Informatyczny System Zarzadzania Lekami Cytotoksycznymi)
+# (pol. Informatyczny System Zarzadzania Lekami Cytotoksycznymi)
 
-
-IT System for the Management of Cytotoxic Drugs
+- IT System for the Management of Cytotoxic Drugs -
 
     • Doctor module
     • Pharmacist module
     • Nurse module
+
 
 IT System for the Management of Cytotoxic Drugs
 
@@ -37,7 +37,11 @@ All this will allow the laboratory staff to focus on clinical work, audit and qu
 
     Cytotoxic drugs mixing module (Pharmacist module)
 
-Oncology Drug Mixing Process: Volumetric is the mixing of intravenous oncology drugs using volumetric methods. Requires a high concentration level by a single ingredient or a second inspector to manually verify the accuracy of the preparation steps during the mixing process. This gravimetric-volumetric mixing uses technology to carry out verification with an electronic balance and the known density of each ingredient. Gravimetric systems confirm electronically the accuracy of prepared volumes and prepared doses. This reduces the need for manual verification of the volume prepared doses. The scales can accurately measure the remaining amount of the drug and the system will calculate a new stability date and return it to the electronic warehouse. A unique barcode label is printed detailing the quantity remaining and the expiration date to enable it to be physically returned to the warehouse. This vial can now be used for future preparation.
+Oncology Drug Mixing Process:
+
+1. Volumetric is the mixing of intravenous oncology drugs using volumetric methods. Requires a high concentration level by a single ingredient or a second inspector to manually verify the accuracy of the preparation steps during the mixing process. This gravimetric-volumetric mixing uses technology to carry out verification with an electronic balance and the known density of each ingredient.
+
+2. Gravimetric systems confirm electronically the accuracy of prepared volumes and prepared doses. This reduces the need for manual verification of the volume prepared doses. The scales can accurately measure the remaining amount of the drug and the system will calculate a new stability date and return it to the electronic warehouse. A unique barcode label is printed detailing the quantity remaining and the expiration date to enable it to be physically returned to the warehouse. This vial can now be used for future preparation.
 
     Drug Delivery Module (Nurse Module)
 
