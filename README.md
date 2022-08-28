@@ -1,11 +1,13 @@
 # ISZLC 
 (pol. Informatyczny System Zarzadzania Lekami Cytotoksycznymi)
 
-= IT System for the Management of Cytotoxic Drugs =
+
+IT SYSTEM FOR THE MANAGEMENT OF CYTOTOXIC DRUGS
 
     • Doctor module
     • Pharmacist module
     • Nurse module
+
 
 
 IT System for the Management of Cytotoxic Drugs
