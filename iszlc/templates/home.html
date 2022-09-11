@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}
+    Ekran wyboru modułu systemu ISZLCC
+{% endblock %}
+
+{% block content %}
+    <center>
+        Wybór modułu systemu ISZLC
+#       <a class="nav-link" href="{{ url_for('iszlc_page') }}">ISZLC<span class="sr-only"></span>
+        <img src="{{url_for('static', filename='/image/iszlc_logo.png')}}" />
+    </center>
+{% endblock %}
