@@ -4,30 +4,37 @@
 {% endblock %}
 
 {% block content %}
-      <table class="table table-hover table-dark">
-        <thead>
-            <tr>
-                <!-- Your Columns HERE -->
-                <th scope="col">ID</th>
-                <th scope="col">Imie</th>
-                <th scope="col">Nazwisko</th>
-                <th scope="col">Numer</th>
-                <th scope="col">Opcje</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Your rows inside the table HERE: -->
-            {% for doktor in Doctors %}
-                <tr>
-                    <td>{{ doktor.doctor_id }}</td>
-                    <td>{{ doktor.doctor_name }}</td>
-                    <td>{{ doktor.doctor_surname }}</td>
-                    <td>{{ doktor.doctor_nr }}</td>
-                    <td>
-                        <button class="btn btn-outline btn-info">Wiecej informacji</button>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+<table class="table table-hover table-dark">
+    <thead>
+        <tr>
+    <!-- Your Columns HERE -->
+            <th scope="col">ID</th>
+            <th scope="col">Imie</th>
+            <th scope="col">Nazwisko</th>
+            <th scope="col">Numer</th>
+        </tr>
+    </thead>
+
+    <!-- Your rows inside the table HERE: -->
+    {% for doktor in Doctors %}
+        <tr>
+            <td>{{ doktor.doctor_id }}</td>
+            <td>{{ doktor.doctor_name }}</td>
+            <td>{{ doktor.doctor_surname }}</td>
+            <td>{{ doktor.doctor_nr }}</td>
+            </td>
+        </tr>
+
+    {% endfor %}
+</table>   
+            <u1 class="list-group mb-3"></u1>
+            <form action="" method="post">
+                <div class="input-group">
+                    <input type="text" name="Doktor" class="form-control"
+                    <input type="submit" value="Dodaj doktora">
+                    <td><button class="btn btn-outline btn-info">Dodaj!</button></td>
+                </di>
+            </form>
+</table>
 {% endblock %}
