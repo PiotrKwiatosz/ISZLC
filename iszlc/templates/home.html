@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 {% block title %}
-    Ekran wyboru modułu systemu ISZLCC
+    ISZLCC
 {% endblock %}
 
 {% block content %}
 
     <center>
-    Wybór modułu systemu ISZLC
+    Witaj w  ISZLC!
 
-    <a class="nav-link" href="{{ url_for('iszlc_page') }}">ISZLC<span class="sr-only"></span>
+     <a class="nav-link" href="{{ url_for('iszlc_page') }}">
     <br/>
-        <img src="{{ url_for ('static', filename='images/iszlc_logo.png' )}}">
+    <img src="{{ url_for('static', filename='images/iszlc_logo.png' )}}">
+
     </center>
 
 {% endblock %}
