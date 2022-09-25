@@ -7,6 +7,13 @@
 
 {% block content %}
 
+<br>
+<td>
+    <a class="btn btn-primary btn-lg btn-block btn-success" 
+    href="{{ url_for('add_page') }}">Dodaj!</a>
+    </td></p>
+</div>
+
 <table class="table table-hover table-dark">
     <thead>
         <tr>
@@ -33,7 +40,6 @@
         </tr>
     {% endfor %}
 </table>   
-         <td><button><a class="btn btn-primary btn-lg btn-block btn-success" href="{{ url_for('add_page') }}"">Dodaj!</button><a>
         </div>
     </form>
 {% endblock %}
