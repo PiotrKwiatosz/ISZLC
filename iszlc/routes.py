@@ -10,12 +10,28 @@ from iszlc import db
 def home_page():
     return render_template('home.html')
 
-@app.route('/iszlc')
+@app.route('/moduly')
 def iszlc_page():
-    doktor = Doctors.query.all()
-    return render_template('iszlc.html', Doctors=doktor)
+    return render_template('iszlc.html')
 
-@app.route('/dodaj', methods=['POST', 'GET'])
+## MODULY
+
+@app.route('/farmaceuta')
+def farm_page():
+    return render_template('farm.html')
+
+@app.route('/pielegniarki')
+def nurse_page():
+    return render_template('nurse.html')
+
+@app.route('/doktorzy')
+def doktorzy_page():
+    doctor = Doctors.query.all()
+    return render_template('doktorzy.html', Doctors=doctor)
+
+## DODAWANIE
+
+@app.route('/dodaj', methods=['GET', 'POST'])
 def add_page():
     form = RegisterForm()
     if form.validate_on_submit():
