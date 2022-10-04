@@ -10,11 +10,46 @@ from iszlc import db
 def home_page():
     return render_template('home.html')
 
-@app.route('/moduly')
+#### GLOWNE
+
+# @app.route('/login')
+# def login_page():
+#   return render_template('login.html')
+
+@app.route('/iszlc')
 def iszlc_page():
     return render_template('iszlc.html')
 
-## MODULY
+## LEKI
+
+@app.route('/leki_wyszukaj')
+def leki_wyszukaj_page():
+    return render_template('leki/wyszukaj.html')
+
+## RECEPTY
+
+@app.route('/recepty_wyszukaj')
+def recepty_wyszukaj_page():
+    return render_template('recepty/wyszukaj.html')
+
+## PRODUKCJA
+
+@app.route('/produkcja-wyszukaj')
+def produkcja_wyszukaj_page():
+    return render_template('produkcja/wyszukaj.html')
+
+## PACJENCI
+
+@app.route('/pacjenci-wyszukaj')
+def pacjenci_wyszukaj_page():
+    return render_template('pacjenci/wyszukaj.html')
+
+## RAPORTY
+
+## SLOWNIKI
+
+
+#### MODULY
 
 @app.route('/farmaceuta')
 def farm_page():
@@ -49,3 +84,19 @@ def add_page():
             flash(f'Blad dodania doktora: {err_msg}', category='danger')
 
     return render_template('add.html', form=form)
+
+## PDF
+
+from flask import render_template, make_response
+import pdfkit
+
+# @app.route('/<name>/<location>') #http://127.0.0.1:5000/Piotr/Sosnowka
+# def pdf_page(name, location):
+#    rendered = render_template('pdf.html')
+#    pdf = pdfkit.from_string(rendered, False)
+
+#    response = make_response(pdf)
+#    response.headers['Content-Type'] = 'application/pdf'
+#    response.headers['Content-Disposition'] = 'attachment; filename=output.pdf'
+
+#    return response

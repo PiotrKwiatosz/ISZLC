@@ -1,45 +1,87 @@
 {% extends 'base.html' %}
 {% block title %}
-  MODUŁY
+  ISZLC
 {% endblock %}
 
-<title>MODUŁY:</title>
+<title>ISZLC:</title>
 
 {% block content %}
 
 <br>
+<style>
+    .isDisabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+  pointer-events: none;
+}
+</style>
 <td>
 
 </div>
 
 <table class="table table-hover table-dark">
-    <td>
-        <td>
-    <!-- Your Columns HERE -->
-            <th scope="col">
-                <a class="btn btn-primary btn-lg btn-block btn-warning" 
-                href="{{ url_for('farm_page') }}">FARMACEUTA</a>  
-                </th></td>
-                    <td></td>
-                    <td></td>
-                <th scope="col">
-                <a class="btn btn-primary btn-lg btn-block btn-success" 
-                href="{{ url_for('doktorzy_page') }}">LEKARZ</a>
-                </th></td>
-                    <td></td>
-                    <td></td>
-            <th scope="col">
-                <a class="btn btn-primary btn-lg btn-block btn-blue" 
-                href="{{ url_for('add_page') }}">PIELĘGNIARKA</a>
-                </th></td>
-                    <td></td>
-                    <td></td>
-
+    <thead>
+        <tr>
+            <!-- Your Columns HERE -->
+            <th scope="col">LEKI</th>
+            <th scope="col">RECEPTY</th>
+            <th scope="col">PRODUKCJA</th>
+        </tr>
     </thead>
+    <tbody>
+        <!-- Your rows inside the table HERE: -->
+            <tr>
+                <td><a href="{{ url_for('leki_wyszukaj_page') }}">Wyszukaj</a>
+                <td><a href="{{ url_for('recepty_wyszukaj_page') }}">Wyszukaj</a>
+                <td><a class="isDisabled" href="{{ url_for('produkcja_wyszukaj_page') }}">Wyszukaj</a>
+            </tr>
+            <tr>
+                <td><a href="leki/dopisz.html">Dopisz</a>
+                <td><a href="recepty/dopisz.html">Dopisz</a>
+                <td><a class="isDisabled" href="#">Dopisz (Produkt)</a>
+            </tr>
+            <tr>
+                <td><a class="isDisabled" href="#">Import docelowy</a>
+                <td><a href="recepty/drukuj.html">Etykiety drukuj</a>
+                <td><a class="isDisabled" href="#">Raport</a>
+            </tr>
+            <tr>
+                <td><a class="isDisabled" href="#">Zamówienie</a>
+                <td><a class="isDisabled" href="#">Raport</a>
+                <td><a class="isDisabled" href="#">Słownik</a>
+            </tr>
+            <tr>
+                <td><a class="isDisabled" href="#">Słownik</a>
+                <td><a class="isDisabled" href="#">Słownik</a>
+            </tr>
+ <!--        {# % endfor %#} -->
+    </tbody>
+</table>
 
-    <!-- Your rows inside the table HERE: -->
+<table class="table table-hover table-dark">
+    <thead>
+        <tr>
+            <!-- Druga Kolumna -->
+            <th scope="col">PACJENCI</th>
+            <th scope="col">RAPORTY</th>
+            <th scope="col">SŁOWNIKI</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Wiersze DRUGIEJ tabeli -->
+        <tr>
+            <td><a href="{{ url_for('pacjenci_wyszukaj_page') }}">Wyszukaj</a>
+            <td><a class="isDisabled" href="#">Wykonane produkty</a>
+            <td><a href="slowniki/users.html">Użytkownicy</a>
+        </tr>
+        <tr>
+            <td><a href="pacjenci/dopisz.html">Dopisz</a>
+            <td><a class="isDisabled" href="#">Wykonane recepty</a>
+            <td><a href="slowniki/oddzialy.html">Oddziały</a>
+        </tr>
+    </tbody>
+</table>
 
-</table>   
-        </div>
-    </form>
 {% endblock %}
