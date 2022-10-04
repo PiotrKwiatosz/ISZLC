@@ -70,7 +70,6 @@ def doktorzy_page():
 def add_page():
     form = RegisterForm()
     if form.validate_on_submit():
-#    if request.method == "POST":
         doctor_to_create = Doctors(doctor_surname=form.doctor_surname.data,
                                    doctor_name=form.doctor_name.data,
                                    doctor_nr=form.doctor_nr.data)
