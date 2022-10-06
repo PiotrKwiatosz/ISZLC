@@ -1,4 +1,3 @@
-from urllib import request
 from iszlc import app
 from flask import render_template, redirect, url_for, flash, request
 from iszlc.models import Doctors
@@ -12,10 +11,6 @@ def home_page():
 
 #### GLOWNE
 
-# @app.route('/login')
-# def login_page():
-#   return render_template('login.html')
-
 @app.route('/iszlc')
 def iszlc_page():
     return render_template('iszlc.html')
@@ -26,30 +21,55 @@ def iszlc_page():
 def leki_wyszukaj_page():
     return render_template('leki/wyszukaj.html')
 
+@app.route('/leki_dopisz')
+def leki_dopisz_page():
+    return render_template('leki/dopisz.html')
+
 ## RECEPTY
 
 @app.route('/recepty_wyszukaj')
 def recepty_wyszukaj_page():
     return render_template('recepty/wyszukaj.html')
 
-## PRODUKCJA
+@app.route('/recepty_dopisz')
+def recepty_dopisz_page():
+    return render_template('recepty/dopisz.html')
 
-@app.route('/produkcja-wyszukaj')
-def produkcja_wyszukaj_page():
-    return render_template('produkcja/wyszukaj.html')
+@app.route('/recepty_drukuj')
+def recepty_drukuj_page():
+    return render_template('recepty/drukuj.html')
+
+## PRODUKCJA
 
 ## PACJENCI
 
-@app.route('/pacjenci-wyszukaj')
+@app.route('/pacjenci_wyszukaj')
 def pacjenci_wyszukaj_page():
     return render_template('pacjenci/wyszukaj.html')
+
+@app.route('/pacjenci_dopisz')
+def pacjenci_dopisz_page():
+    return render_template('pacjenci/dopisz.html')
 
 ## RAPORTY
 
 ## SLOWNIKI
 
+@app.route('/slowniki_oddzialy')
+def slowniki_oddzialy_page():
+    return render_template('modules.html')
+
+@app.route('/slowniki_users')
+def slowniki_users_page():
+    return render_template('slowniki/users.html')
 
 #### MODULY
+
+@app.route('/moduly')
+def modules_page():
+    return render_template('slowniki/oddzialy.html')
+
+# --
 
 @app.route('/farmaceuta')
 def farm_page():
@@ -64,7 +84,7 @@ def doktorzy_page():
     doctor = Doctors.query.all()
     return render_template('doktorzy.html', Doctors=doctor)
 
-## DODAWANIE
+# DODAWANIE
 
 @app.route('/dodaj', methods=['GET', 'POST'])
 def add_page():
@@ -80,7 +100,7 @@ def add_page():
 
     if form.errors != {}: #Jesli nie ma bledow z validatora
         for err_msg in form.errors.values():
-            flash(f'Blad dodania doktora: {err_msg}', category='danger')
+            flash(f'Bląd dodania doktora: {err_msg}', category='danger')
 
     return render_template('add.html', form=form)
 

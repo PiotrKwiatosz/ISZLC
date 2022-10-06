@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}
+    Użytkownicy
+{% endblock %}
+
+{% block content %}
+
+    <center>
+    <!-- Witaj w  ISZLC! -->
+    <br>
+    UŻYTKOWNICY:
+    <br><br>
+    <a class="nav-link" href="{{ url_for('doktorzy_page') }}">Doktorzy</a>
+    <br><br>
+    <img src="{{ url_for('static', filename='images/login_logo.png' )}}">
+
+    </center>
+
+{% endblock %}
