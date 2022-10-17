@@ -10,7 +10,7 @@
 <br>
 <td>
     <a class="btn btn-primary btn-lg btn-block btn-success" 
-    href="{{ url_for('add_page') }}">Dodaj!</a>
+    href="{{ url_for('add_doctor_page') }}">Dodaj!</a>
     </td></p>
 </div>
 
@@ -29,10 +29,10 @@
     {% for doktor in Doctors %}
 
         <tr>
-            <td>{{ doktor.doctor_id }}</td>
-            <td>{{ doktor.doctor_surname }}</td>
-            <td>{{ doktor.doctor_name }}</td>
-            <td>{{ doktor.doctor_nr }}</td>
+            <td>{{ doktor.id }}</td>
+            <td>{{ doktor.nazwisko }}</td>
+            <td>{{ doktor.imie }}</td>
+            <td>{{ doktor.nr }}</td>
             <td>
                 <button class="btn btn-outline btn-warning">Zmień</button>
 
