@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}
-  ISZLC
+  Strona modułu FARMACEUTA
 {% endblock %}
 
-<title>ISZLC:</title>
+<title>Farmaceuta:</title>
 
 {% block content %}
 
@@ -40,7 +40,7 @@
             <tr>
                 <td><a href="{{ url_for('leki_dopisz_page') }}">Dopisz</a>
                 <td><a href="{{ url_for('recepty_dopisz_page') }}">Dopisz</a>
-                <td><a class="isDisabled" href="#">Dopisz (Produkt)</a>
+                <td><a class="isDisabled" href="#">Dopisz (Produkuj)</a>
             </tr>
             <tr>
                 <td><a class="isDisabled" href="#">Import docelowy</a>
@@ -78,8 +78,13 @@
         </tr>
         <tr>
             <td><a href="{{ url_for('pacjenci_dopisz_page') }}">Dopisz</a>
-            <td><a class="isDisabled" href="#">Wykonane recepty</a>
+            <td><a class="isDisabled" href="#">Wypisane recepty</a>
             <td><a href="{{ url_for('slowniki_oddzialy_page') }}">Oddziały</a>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><a href="{{ url_for('slowniki_wlasciciel_page') }}">Właściciel</a></td>
         </tr>
     </tbody>
 </table>
