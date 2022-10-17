@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}
+Strona Dodawania Użytkownika
+{% endblock %}
+
+{% block content %}
+<body class="text-center">
+    <div class="container">
+        <form method="POST" class="form-register" style="color:white">
+            {{ form.hidden_tag() }}
+            <img class="mb-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7qqRevzB30TPvjw5LI7_8sgH8mxigfZ17MQ&usqp=CAU" alt="">
+            <h1 class="h3 mb-3 font-weight-normal">
+                Dodaj UŻYTKOWNIKA
+            </h1>
+            <br>
+            {{ form.imie.label() }}
+            {{ form.imie(class="form-control", placeholder="Imie") }}
+
+            {{ form.nazwisko.label() }}
+            {{ form.nazwisko(class="form-control", placeholder="Nazwisko") }}
+
+            {{ form.pwz.label() }}
+            {{ form.pwz(class="form-control", placeholder="PWZ") }}
+
+            {{ form.tytul_naukowy.label() }}
+            {{ form.tytul_naukowy(class="form-control", placeholder="Tytuł naukowy") }}
+
+            {{ form.uprawnienia.label() }}
+            {{ form.uprawnienia(class="form-control", placeholder="Uprawnienia") }}
+
+            {{ form.haslo.label() }}
+            {{ form.haslo(class="form-control", placeholder="Hasło") }}
+            <br>
+
+            <div class="checkbox mb-3">
+
+            <br><br>
+
+
+            {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+
+            <br>
+
+            <div class="checkbox mb-3">
+                <h6>Już jest?</h6>
+                <a class="btn btn-sm btn-secondary" href="{{ url_for('slowniki_lista_users_page') }}">
+                    Lista użytkowników</a>
+
+                    <br><br>
+
+        </form>
+    </div>
+</body>
+{% endblock %}
