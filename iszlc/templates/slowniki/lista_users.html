@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}
+    Użytkownicy
+{% endblock %}
+
+{% block content %}
+
+<center>
+<br>
+UŻYTKOWNICY:
+
+<br><br>
+   
+<table class="table table-hover table-dark">
+    <thead>
+        <tr>
+    <!-- Your Columns HERE -->
+            <th scope="col">ID</th>
+            <th scope="col">Nazwisko</th>
+            <th scope="col">Imie</th>
+            <th scope="col">PWZ</th>
+        </tr>
+    </thead>
+    
+        <!-- Your rows inside the table HERE: -->
+    {% for user in Users %}
+    
+       <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.nazwisko }}</td>
+            <td>{{ user.imie }}</td>
+            <td>{{ user.pwz }}</td>
+            <td>
+                <button class="btn btn-outline btn-warning">Zmień</button>
+    
+                <a class="btn btn-outline btn-danger"
+                href="#">PDF</a>
+                    
+            </td>
+        </tr>
+    {% endfor %}
+</table>   
+        </div>
+    </form>
+</center>
+{% endblock %}
