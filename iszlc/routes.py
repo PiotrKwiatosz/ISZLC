@@ -74,8 +74,8 @@ def pacjenci_dopisz_page():
 def slowniki_oddzialy_page():
     return render_template('modules.html')
 
-@app.route('/slowniki_users', methods=['GET', 'POST'])
-def slowniki_users_page():
+@app.route('/add_dodaj_uzytkownika', methods=['GET', 'POST'])
+def add_dodaj_uzytkownika_page():
     form = RegisterForm()
     if form.validate_on_submit():
         user_to_create = Users(nazwisko=form.nazwisko.data,
@@ -87,18 +87,18 @@ def slowniki_users_page():
         db.session.add(user_to_create)
         db.session.commit()
         flash(f"Użytkownik dodany pomyslnie!", category='success')
-        return redirect(url_for('iszlc_page'))
+        return redirect(url_for('slowniki_uzytkownicy_page'))
 
     if form.errors != {}: #Jesli nie ma bledow z validatora
         for err_msg in form.errors.values():
             flash(f'Bląd dodania użytkownika: {err_msg}', category='danger')
 
-    return render_template('add/add_users.html', form=form)
+    return render_template('add/dodaj_uzytkownika.html', form=form)
 
-@app.route('/slowniki_lista_users')
-def slowniki_lista_users_page():
+@app.route('/slowniki_uzytkownicy')
+def slowniki_uzytkownicy_page():
     user = Users.query.all()
-    return render_template('slowniki/lista_users.html', Users=user)
+    return render_template('slowniki/uzytkownicy.html', Users=user)
 
 @app.route('/slowniki_wlasciciel')
 def slowniki_wlasciciel_page():
