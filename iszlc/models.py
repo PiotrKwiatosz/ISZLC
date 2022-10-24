@@ -1,7 +1,7 @@
 from iszlc import db
 
 class Leki(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
+    id_lek = db.Column(db.Integer(), primary_key=True)
     ean = db.Column(db.Integer(), nullable=False, unique=True)
     nazwa_handlowa = db.Column(db.String(), nullable=False)
     nazwa_miedzynarodowa = db.Column(db.String(length=1024), nullable=False, unique=False)
@@ -29,8 +29,8 @@ class Leki(db.Model):
     def __repr__(self):
         return f'Leki {self.nazwa_handlowa}'
 
-class Pacjent(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
+class Pacjenci(db.Model):
+    id_pacjent = db.Column(db.Integer(), primary_key=True)
     nazwisko = db.Column(db.String(length=30), nullable=False, unique=False)
     pierwsze_imie = db.Column(db.String(length=12), nullable=False, unique=False)
     drugie_imie = db.Column(db.String(length=12), nullable=True, unique=False)
@@ -42,17 +42,8 @@ class Pacjent(db.Model):
     def __repr__(self):
         return f'Pacjent {self.nazwisko}'
 
-class Doctors(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
-    imie = db.Column(db.String(200), nullable=False, unique=False)
-    nazwisko = db.Column(db.String(400), nullable=False, unique=True)
-    nr = db.Column(db.Integer(), nullable=True, unique=True)
-
-    def __repr__(self):
-        return f'Doktor {self.id}'
-
-class Users(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
+class Uzytkownicy(db.Model):
+    id_uzytkownik = db.Column(db.Integer(), primary_key=True)
     nazwisko = db.Column(db.String(length=30), nullable=False, unique=False)
     imie = db.Column(db.String(length=10), nullable=True, unique=False)
     pwz = db.Column(db.Integer(), nullable=True, unique=False)
@@ -61,4 +52,4 @@ class Users(db.Model):
     haslo = db.Column(db.String(length=30), nullable=True, unique=False)
 
     def __repr__(self):
-        return f'User {self.id}'
+        return f'Uzytkownik {self.id_uzytkownik}'

@@ -1,6 +1,6 @@
 from iszlc import app
 from flask import render_template, redirect, url_for, flash, request
-from iszlc.models import Leki, Pacjent, Doctors, Users
+from iszlc.models import Leki, Pacjenci, Uzytkownicy
 from iszlc.forms import RegisterForm
 from iszlc import db
 
@@ -62,9 +62,28 @@ def recepty_drukuj_page():
 def pacjenci_wyszukaj_page():
     return render_template('pacjenci/wyszukaj.html')
 
-@app.route('/pacjenci_dopisz')
+@app.route('/pacjenci_dopisz', methods=['GET', 'POST'])
 def pacjenci_dopisz_page():
-    return render_template('pacjenci/dopisz.html')
+    form = RegisterForm()
+    if form.validate_on_submit():
+        pacjent_to_create = Pacjenci(nazwisko=form.lek_ean.data,
+                            pierwsze_imie=form.lek_nazwa_handlowa.data,
+                            drugie_imie=form.lek_nazwa_miedzynarodowa.data,
+                            pesel=form.lek_ean.data,
+                            data_urodzenia=form.lek_ean.data,
+                            badanie=form.lek_ean.data,
+                            nr_w_badaniu=form.lek_ean.data,
+                            )
+        db.session.add(pacjent_to_create)
+        db.session.commit()
+        flash(f"Pacjent dopisany pomyslnie!", category='success')
+        return redirect(url_for('iszlc_page'))
+
+    if form.errors != {}: #Jesli nie ma bledow z validatora
+        for err_msg in form.errors.values():
+            flash(f'Bląd dopisywania pacjenta: {err_msg}', category='danger')
+
+    return render_template('pacjenci/dopisz.html', form=form)
 
 ## RAPORTY
 
@@ -78,13 +97,13 @@ def slowniki_oddzialy_page():
 def add_dodaj_uzytkownika_page():
     form = RegisterForm()
     if form.validate_on_submit():
-        user_to_create = Users(nazwisko=form.nazwisko.data,
+        uzytkownik_to_create = Uzytkownicy(nazwisko=form.nazwisko.data,
                                 imie=form.imie.data,
                                 pwz=form.pwz.data,
                                 tytul_naukowy=form.tytul_naukowy.data,
                                 uprawnienia=form.uprawnienia.data,
                                 haslo=form.haslo.data)
-        db.session.add(user_to_create)
+        db.session.add(uzytkownik_to_create)
         db.session.commit()
         flash(f"Użytkownik dodany pomyslnie!", category='success')
         return redirect(url_for('slowniki_uzytkownicy_page'))
@@ -97,8 +116,8 @@ def add_dodaj_uzytkownika_page():
 
 @app.route('/slowniki_uzytkownicy')
 def slowniki_uzytkownicy_page():
-    user = Users.query.all()
-    return render_template('slowniki/uzytkownicy.html', Users=user)
+    user = Uzytkownicy.query.all()
+    return render_template('slowniki/uzytkownicy.html', Uzytkownicy=user)
 
 @app.route('/slowniki_wlasciciel')
 def slowniki_wlasciciel_page():
@@ -120,38 +139,38 @@ def farm_page():
 def nurse_page():
     return render_template('nurse.html')
 
-@app.route('/doktorzy')
-def doktorzy_page():
-    doctor = Doctors.query.all()
-    return render_template('doktorzy.html', Doctors=doctor)
+#@app.route('/doktorzy')
+#def doktorzy_page():
+ #   doctor = Doctors.query.all()
+ #   return render_template('doktorzy.html', Doctors=doctor)
 
 # DODAWANIE
 
-@app.route('/dodaj_doktor', methods=['GET', 'POST'])
-def add_doctor_page():
-    form = RegisterForm()
-    if form.validate_on_submit():
-        doctor_to_create = Doctors(nazwisko=form.nazwisko.data,
-                                   imie=form.imie.data,
-                                   nr=form.nr.data)
-        db.session.add(doctor_to_create)
-        db.session.commit()
-        flash(f"Doktor dodany pomyslnie!", category='success')
-        return redirect(url_for('iszlc_page'))
+#@app.route('/dodaj_doktor', methods=['GET', 'POST'])
+#def add_doctor_page():
+#    form = RegisterForm()
+#    if form.validate_on_submit():
+ #       doctor_to_create = Doctors(nazwisko=form.nazwisko.data,
+ #                                  imie=form.imie.data,
+ #                                  nr=form.nr.data)
+#        db.session.add(doctor_to_create)
+#       db.session.commit()
+#        flash(f"Doktor dodany pomyslnie!", category='success')
+ #       return redirect(url_for('iszlc_page'))
 
-    if form.errors != {}: #Jesli nie ma bledow z validatora
-        for err_msg in form.errors.values():
-            flash(f'Bląd dodania doktora: {err_msg}', category='danger')
-
-    return render_template('add/add_doctor.html', form=form)
+ #   if form.errors != {}: #Jesli nie ma bledow z validatora
+ #       for err_msg in form.errors.values():
+ #           flash(f'Bląd dodania doktora: {err_msg}', category='danger')
+#
+ #   return render_template('add/add_doctor.html', form=form)
 
 
 
 
 ## PDF
 
-from flask import render_template, make_response
-import pdfkit
+#from flask import render_template, make_response
+#import pdfkit
 
 # @app.route('/<name>/<location>') #http://127.0.0.1:5000/Piotr/Sosnowka
 # def pdf_page(name, location):
@@ -162,4 +181,4 @@ import pdfkit
 #    response.headers['Content-Type'] = 'application/pdf'
 #    response.headers['Content-Disposition'] = 'attachment; filename=output.pdf'
 
-#    return response
+#    return respone

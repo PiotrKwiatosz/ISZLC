@@ -1,36 +1,40 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
-from iszlc.models import Doctors, Users, Leki, Pacjent
+from iszlc.models import Uzytkownicy, Pacjenci, Leki
 
-## LEKARZ
+## PACJENT
 class RegisterForm(FlaskForm):
     def validate_nazwisko(self, nazwisko_to_check):
-        nazwisko = Doctors.query.filter_by(nazwisko=nazwisko_to_check.data).first()
+        nazwisko = Pacjenci.query.filter_by(nazwisko=nazwisko_to_check.data).first()
         if nazwisko:
-            raise ValidationError('Doktor aktualnie istnieje! Prosze sprobuj inne nazwisko doktora')
+            raise ValidationError('Pacjent aktualnie już jest! Prosze sprobuj inne nazwisko')
 
-    def validate_nr(self, nr_to_check):
-        nr = Doctors.query.filter_by(nr=nr_to_check.data).first()
-        if nr:
-            raise ValidationError('Podany aktualnie istnieje! Prosze sprobuj inny numer')
+    def validate_nr_w_badaniu(self, nr_w_badaniu_to_check):
+        nr_w_badaniu = Pacjenci.query.filter_by(nr_w_badaniu=nr_w_badaniu_to_check.data).first()
+        if nr_w_badaniu:
+            raise ValidationError('Podany numer aktualnie istnieje! Prosze sprobuj inny numer')
 
 
-    nazwisko = StringField(label='Nazwisko doktora:', validators=[Length(min=3, max=60), DataRequired()])
-    imie = StringField(label='Imię doktora:', validators=[Length(min=2, max=30), DataRequired()])
-    nr = StringField(label='Numer:', validators=[Length(min=4), DataRequired()])
+    nazwisko = StringField(label='Nazwisko:', validators=[Length(min=3, max=60), DataRequired()])
+    pierwsze_imie = StringField(label='Imię (pierwsze):', validators=[Length(min=2, max=30), DataRequired()])
+    drugie_imie = StringField(label='Drugie imię:', validators=[Length(min=2, max=30)])
+    pesel = StringField(label='PESEL:', validators=[Length(min=11), DataRequired()])
+    data_urodzenia = StringField(label='Data urodzenia:', validators=[Length(min=8, max=10)])
+    badanie = StringField(label='Badanie:', validators=[DataRequired()])
+    pnr_w_badaniu = StringField(label='Numer w badaniu:', validators=[Length(min=1), DataRequired()])
     
     submit = SubmitField(label='Dodaj!')
 
 ## USERS
 class RegisterForm(FlaskForm):
     def validate_nazwisko(self, nazwisko_to_check):
-        nazwisko = Users.query.filter_by(nazwisko=nazwisko_to_check.data).first()
+        nazwisko = Uzytkownicy.query.filter_by(nazwisko=nazwisko_to_check.data).first()
         if nazwisko:
-            raise ValidationError('Użytkownik aktualnie istnieje! Prosze sprobuj inne nazwisko użykownika')
+            raise ValidationError('Użytkownik aktualnie już istnieje! Prosze sprobuj inne nazwisko użykownika')
 
     def validate_pwz(self, pwz_to_check):
-        pwz = Users.query.filter_by(pwz=pwz_to_check.data).first()
+        pwz = Uzytkownicy.query.filter_by(pwz=pwz_to_check.data).first()
         if pwz:
             raise ValidationError('Podany aktualnie istnieje! Prosze sprobuj inny numer')
 
@@ -43,3 +47,5 @@ class RegisterForm(FlaskForm):
     haslo = StringField(label='Hasło:', validators=[Length(min=4), DataRequired()])
     
     submit = SubmitField(label='Dodaj!')
+
+## LEKI

@@ -11,4 +11,51 @@
 
     </center>
 
+    <title>Pacjenci:</title>
+    <br>
+    <td>
+        <a class="btn btn-primary btn-lg btn-block btn-success" 
+        href="{{ url_for('pacjenci_dopisz_page') }}">Dodaj!</a>
+        </td></p>
+    </div>
+    
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+        <!-- Your Columns HERE -->
+                <th scope="col">ID</th>
+                <th scope="col">Nazwisko</th>
+                <th scope="col">Pierwsze imię</th>
+                <th scope="col">Drugie imię</th>
+                <th scope="col">PESEL</th>
+                <th scope="col">Data urodzenia</th>
+                <th scope="col">Badanie</th>
+                <th scope="col">Nr w badaniu</th>
+            </tr>
+        </thead>
+    
+        <!-- Your rows inside the table HERE: -->
+        {% for user in Pacjenci %}
+    
+            <tr>
+                <td>{{ id-pacjent }}</td>
+                <td>{{ nazwisko }}</td>
+                <td>{{ pierwsze_imie }}</td>
+                <td>{{ drugie_imie }}</td>
+                <td>{{ pesel }}</td>
+                <td>{{ data_urodzenia }}</td>
+                <td>{{ badanie }}</td>
+                <td>{{ nr_w_badaniu }}</td>
+                <td>
+                    <button class="btn btn-outline btn-warning">Zmień</button>
+    
+                    <a class="btn btn-outline btn-danger"
+                    href="#">PDF</a>
+                    
+                </td>
+            </tr>
+        {% endfor %}
+    </table>   
+            </div>
+        </form>
 {% endblock %}
