@@ -19,17 +19,18 @@ def iszlc_page():
 
 @app.route('/leki_wyszukaj')
 def leki_wyszukaj_page():
-    return render_template('leki/wyszukaj.html')
+    leki = Leki.query.all()
+    return render_template('leki/wyszukaj.html', Leki=leki)
 
 @app.route('/leki_dopisz', methods=['GET', 'POST'])
 def leki_dopisz_page():
     form = RegisterForm()
     if form.validate_on_submit():
-        lek_to_create = Leki(ean=form.lek_ean.data,
-                            nazwa_handlowa=form.lek_nazwa_handlowa.data,
-                            nazwa_miedzynarodowa=form.lek_nazwa_miedzynarodowa.data,
+        leki_to_create = Leki(ean=form.leki_ean.data,
+                            nazwa_handlowa=form.leki_nazwa_handlowa.data,
+                            nazwa_miedzynarodowa=form.leki_nazwa_miedzynarodowa.data,
                             )
-        db.session.add(lek_to_create)
+        db.session.add(leki_to_create)
         db.session.commit()
         flash(f"Lek dodany pomyslnie!", category='success')
         return redirect(url_for('iszlc_page'))

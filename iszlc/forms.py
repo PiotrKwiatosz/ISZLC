@@ -49,3 +49,24 @@ class RegisterForm(FlaskForm):
     submit = SubmitField(label='Dodaj!')
 
 ## LEKI
+
+class RegisterForm(FlaskForm):
+    def validate_nazwisko(self, nazwisko_to_check):
+        nazwa_miedzynarodowa = Leki.query.filter_by(nazwisko=nazwisko_to_check.data).first()
+        if nazwa_miedzynarodowa:
+            raise ValidationError('Lek już istnieje! Prosze sprobuj inną nazwe leku')
+
+    def validate_pwz(self, pwz_to_check):
+        ean = Leki.query.filter_by(pwz=pwz_to_check.data).first()
+        if ean:
+            raise ValidationError('Podany aktualnie istnieje! Prosze sprobuj inny numer')
+
+
+    nazwa_handlowa = StringField(label='Nazwa handlowa leku:', validators=[Length(min=4, max=60), DataRequired()])
+    nazwa_miedzynarodowa = StringField(label='Nazwa międzynarodowa leku:', validators=[Length(min=2, max=30), DataRequired()])
+    ean = StringField(label='EAN:', validators=[Length(min=4), DataRequired()])
+    dawka = StringField(label='Dawka:', validators=[Length(min=2), DataRequired()])
+    producent = StringField(label='Producent:', validators=[Length(min=4), DataRequired()])
+    subst_czynna = StringField(label='Substancja czynna:', validators=[Length(min=4), DataRequired()])
+    
+    submit = SubmitField(label='Dodaj!')

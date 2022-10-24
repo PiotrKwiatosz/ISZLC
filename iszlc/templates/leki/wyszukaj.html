@@ -21,38 +21,58 @@
 
 <br>
 <br>
-
+  <!-- Your columns inside the table HERE: -->
   <table class="table table-hover table-dark">
     <thead>
       <tr>
+        <th scope="col">KOD</th>
+        <th scope="col">Kod EAN</th>
         <th scope="col">Nazwa handlowa</th>
         <th scope="col">Nazwa międzynarodowa</th>
-        <th scope="col">Producent</th>
-        <th scope="col">Postać</th>
         <th scope="col">Dawka</th>
+        <th scope="col">Producent</th>
+        <th scope="col">Substancja czynna</th>
+        <th scope="col">Zawartość substancji czynnej w 1 ml</th>
+        <th scope="col">Zawartość substancji czynnej w mg</th>
+        <th scope="col">Opis opakowania</th>
+        <th scope="col">Objętość opakowania w ml</th>
+        <th scope="col">Postać</th>
+        <th scope="col">Barwa</th>
+        <th scope="col">Droga podania</th>
+        <th scope="col">Okres ważności rozcieńczonego roztworu wg producenta</th>
+        <th scope="col">Temperatura przechowywania rozcieńczonego roztworu wg producenta</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-        <td>Alexan</td>
-        <td>Cytarabinum</td>
-        <td>EBWE</td>
-        <td>Roztwór do infuzji</td>
-        <td>50 mg/ml</td>
-        <td>
-          <a class="btn btn-outline btn-warning" href="#">POKAŻ</a>
-          <a class="btn btn-outline btn-danger" href="#">EDYTUJ</a>
-        </td>
-      </tr>
+         <!-- Your rows inside the table HERE: -->
+            {% for leki in Leki %}
 
-
-      
+                <tr>
+                    <td>{{ leki.id_lek }}</td>
+                    <td>{{ leki.ean }}</td>
+                    <td>{{ leki.nazwa_handlowa }}</td>
+                    <td>{{ leki.nazwa_miedzynarodowa }}</td>
+                    <td>{{ leki.dawka }}</td>
+                    <td>{{ leki.producent }}</td>
+                    <td>{{ leki.subst_czynns }}</td>
+                    <td>{{ leki.zawartosc_subst_ml }}</td>
+                    <td>{{ leki.zawartosc_subst_mg }}</td>
+                    <td>{{ leki.opis_op }}</td>
+                    <td>{{ leki.obj_op_ml }}</td>
+                    <td>{{ leki.postac }}</td>
+                    <td>{{ leki.barwa }}</td>
+                    <td>{{ leki.droga_podania }}</td>
+                    <td>{{ leki.okres_waz_roz_rozt_prod }}</td>
+                    <td>{{ leki.temp_prz_rozc_rozt_prod }}</td>
+                    <td>
+                      <a class="btn btn-outline btn-warning" href="#">POKAŻ</a>
+                      <a class="btn btn-outline btn-danger" href="#">EDYTUJ</a>
+                    </td> 
+                </tr>
+            {% endfor %}   
     </tbody>
   </table>
-
   <br><br><br><br>
-
-
 </div>
-
 {% endblock %}

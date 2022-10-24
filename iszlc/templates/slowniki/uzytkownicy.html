@@ -25,6 +25,9 @@ UŻYTKOWNICY:
             <th scope="col">Nazwisko</th>
             <th scope="col">Imie</th>
             <th scope="col">PWZ</th>
+            <th scope="col">Tytuł naukowy</th>
+            <th scope="col">Uprawnienia</th>
+            <th scope="col">Hasło</th>
         </tr>
     </thead>
     
@@ -32,10 +35,13 @@ UŻYTKOWNICY:
     {% for user in Uzytkownicy %}
     
        <tr>
-            <td>{{ id }}</td>
-            <td>{{ nazwisko }}</td>
-            <td>{{ imie }}</td>
-            <td>{{ pwz }}</td>
+            <td>{{ user.id_uzytkownik }}</td>
+            <td>{{ user.nazwisko }}</td>
+            <td>{{ user.imie }}</td>
+            <td>{{ user.pwz }}</td>
+            <td>{{ user.tytul_naukowy }}</td>
+            <td>{{ user.uprawnienia }}</td>
+            <td>{{ user.haslo }}</td>
             <td>
                 <button class="btn btn-outline btn-warning">Zmień</button>
     
