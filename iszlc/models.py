@@ -19,7 +19,7 @@ class Leki(db.Model):
     temp_prz_rozc_rozt_prod = db.Column(db.String(), nullable=True, unique=False)
 
     def __repr__(self):
-        return f'Leki {self.nazwa_handlowa}'
+        return f'Lek {self.nazwa_handlowa}'
 
 class Pacjenci(db.Model):
     id_pacjent = db.Column(db.Integer(), primary_key=True, nullable=False, autoincrement=True, unique=True)
@@ -35,13 +35,20 @@ class Pacjenci(db.Model):
         return f'Pacjent {self.nazwisko}'
 
 class Uzytkownicy(db.Model):
-    id_uzytkownik = db.Column(db.Integer(), primary_key=True, nullable=False, autoincrement=True, unique=True)
-    nazwisko = db.Column(db.String(length=30), nullable=False, unique=False)
-    imie = db.Column(db.String(length=10), nullable=False, unique=False)
-    pwz = db.Column(db.Integer(), nullable=False, unique=False)
-    tytul_naukowy = db.Column(db.String(), nullable=False, unique=False)
-    uprawnienia = db.Column(db.String(), nullable=False, unique=False)
-    haslo = db.Column(db.String(length=30), nullable=False, unique=False)
+    id_uzytkownik = db.Column(db.Integer(), primary_key=True)
+    nazwisko = db.Column(db.String(length=30), nullable=True, unique=False)
+    imie = db.Column(db.String(length=10), nullable=True, unique=False)
+    pwz = db.Column(db.Integer(), nullable=True, unique=False)
+    tytul_naukowy = db.Column(db.String(), nullable=True, unique=False)
+    uprawnienia = db.Column(db.String(), nullable=True, unique=False)
+    haslo = db.Column(db.String(length=30), nullable=True, unique=False)
 
     def __repr__(self):
-        return f'Uzytkownik {self.id_uzytkownik}'
+        return f'Uzytkownik {self.nazwisko}'
+
+class Owners(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    nazwa = db.Column(db.String(length=30), nullable=True, unique=False)
+
+    def __repr__(self):
+        return f'Właściciel {self.nazwa}'
