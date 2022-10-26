@@ -9,37 +9,32 @@
 
 <br>
 <td>
-
 </div>
-
 <table class="table table-hover table-dark">
     <td>
         <td>
     <!-- Your Columns HERE -->
             <th scope="col">
                 <a class="btn btn-primary btn-lg btn-block btn-warning" 
-                href="{{ url_for('farm_page') }}">FARMACEUTA</a>  
-                </th></td>
-                    <td></td>
-                    <td></td>
-                <th scope="col">
-                <a class="btn btn-primary btn-lg btn-block btn-success" 
-                href="{{ url_for('doktorzy_page') }}">LEKARZ</a>
+                href="{{ url_for('iszlc_page') }}">FARMACEUTA</a>  
                 </th></td>
                     <td></td>
                     <td></td>
             <th scope="col">
                 <a class="btn btn-primary btn-lg btn-block btn-blue" 
-                href="{{ url_for('nurse_page') }}">PIELĘGNIARKA</a>
+                href="{{ url_for('iszlc_page') }}">PIELĘGNIARKA</a>
+                </th></td>
+                    <td></td>
+                    <td></td>                   
+                <th scope="col">
+                <a class="btn btn-primary btn-lg btn-block btn-success" 
+                href="{{ url_for('iszlc_page') }}">LEKARZ</a>
                 </th></td>
                     <td></td>
                     <td></td>
-
     </thead>
-
-    <!-- Your rows inside the table HERE: -->
-
 </table>   
-        </div>
+<img src="{{ url_for('static', filename='images/logo_iszlc.svg' )}}" width="">
+    </div>
     </form>
 {% endblock %}
