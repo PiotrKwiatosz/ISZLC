@@ -5,12 +5,38 @@
 
 {% block content %}
 
-    <center>
-    <!-- Witaj w  ISZLC! -->
-
-     <a class="nav-link" href="{{ url_for('slowniki_wlasciciel_page') }}">
-    <img src="{{ url_for('static', filename='images/login_logo.png' )}}" width="500">
-
-    </center>
+<br>
+      <title>Właściciel:</title>
+      <br>
+      
+      <table class="table table-hover table-dark">
+          <thead>
+              <tr>
+          <!-- Your Columns HERE -->
+                  <th scope="col">ID</th>
+                  <th scope="col">Nazwa</th>
+              </tr>
+          </thead>
+      
+          <!-- Your rows inside the table HERE: -->
+          {% for owner in Owners %}
+      
+              <tr>
+                  <td>{{ owner.id }}</td>
+                  <td>{{ owner.nazwa }}</td>
+                  <td>
+                      <button class="btn btn-outline btn-warning">Zmień</button>
+      
+                      <a class="btn btn-outline btn-danger"
+                      href="#">Usuń</a>
+                      
+                  </td>
+              </tr>
+          {% endfor %}
+      </table> 
+      <center>   
+         <a class="nav-link" href="{{ url_for('slowniki_wlasciciel_page') }}">
+        <img src="{{ url_for('static', filename='images/login_logo.png' )}}" width="500">
+      </center>
 
 {% endblock %}
