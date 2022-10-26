@@ -1,6 +1,6 @@
 from iszlc import app
 from flask import render_template, redirect, url_for, flash, request
-from iszlc.models import Leki, Pacjenci, Uzytkownicy
+from iszlc.models import Leki, Pacjenci, Uzytkownicy, Owners
 from iszlc.forms import RegisterForm
 from iszlc import db
 
@@ -19,27 +19,31 @@ def iszlc_page():
 
 @app.route('/leki_wyszukaj')
 def leki_wyszukaj_page():
-    leki = Leki.query.all()
-    return render_template('leki/wyszukaj.html', Leki=leki)
+    lek = Leki.query.all()
+    return render_template('leki/wyszukaj.html', Leki=lek)
 
 @app.route('/leki_dopisz', methods=['GET', 'POST'])
 def leki_dopisz_page():
     form = RegisterForm()
     if form.validate_on_submit():
-        leki_to_create = Leki(ean=form.leki_ean.data,
-                            nazwa_handlowa=form.leki_nazwa_handlowa.data,
-                            nazwa_miedzynarodowa=form.leki_nazwa_miedzynarodowa.data,
+        lek_to_create = Leki(ean=form.ean.data,
+                            nazwa_handlowa=form.nazwa_handlowa.data,
+                            nazwa_miedzynarodowa=form.nazwa_miedzynarodowa.data,
                             )
-        db.session.add(leki_to_create)
+        db.session.add(lek_to_create)
         db.session.commit()
         flash(f"Lek dodany pomyslnie!", category='success')
-        return redirect(url_for('iszlc_page'))
+        return redirect(url_for('leki_wyszukaj_page'))
 
     if form.errors != {}: #Jesli nie ma bledow z validatora
         for err_msg in form.errors.values():
             flash(f'Bląd dodania leku: {err_msg}', category='danger')
 
     return render_template('leki/dopisz.html', form=form)
+
+@app.route('/dodaj_leki')
+def dodaj_leki_page():
+    return render_template('dodaj/leki.html')
 
 ## RECEPTY
 
@@ -59,22 +63,18 @@ def recepty_drukuj_page():
 
 ## PACJENCI
 
-@app.route('/pacjenci_wyszukaj')
-def pacjenci_wyszukaj_page():
-    return render_template('pacjenci/wyszukaj.html')
-
-@app.route('/pacjenci_dopisz', methods=['GET', 'POST'])
-def pacjenci_dopisz_page():
+@app.route('/dodaj_pacjenta_dopisz', methods=['GET', 'POST'])
+def dodaj_pacjenta_page():
     form = RegisterForm()
     if form.validate_on_submit():
-        pacjent_to_create = Pacjenci(nazwisko=form.lek_ean.data,
-                            pierwsze_imie=form.lek_nazwa_handlowa.data,
-                            drugie_imie=form.lek_nazwa_miedzynarodowa.data,
-                            pesel=form.lek_ean.data,
-                            data_urodzenia=form.lek_ean.data,
-                            badanie=form.lek_ean.data,
-                            nr_w_badaniu=form.lek_ean.data,
-                            )
+        pacjent_to_create = Pacjenci(nazwisko=form.nazwisko.data,
+                                    pierwsze_imie=form.pierwsze_imie.data,
+                                    drugie_imie=form.drugie_imie.data,
+                                    pesel=form.pesel.data,
+                                    data_urodzenia=form.data_urodzenia.data,
+                                    badanie=form.badanie.data,
+                                    nr_w_badaniu=form.nr_w_badaniu.data,
+                                    )
         db.session.add(pacjent_to_create)
         db.session.commit()
         flash(f"Pacjent dopisany pomyslnie!", category='success')
@@ -84,7 +84,16 @@ def pacjenci_dopisz_page():
         for err_msg in form.errors.values():
             flash(f'Bląd dopisywania pacjenta: {err_msg}', category='danger')
 
-    return render_template('pacjenci/dopisz.html', form=form)
+    return render_template('dodaj/pacjenta.html', form=form)
+
+@app.route('/pacjenci_dopisz')
+def pacjenci_dopisz_page():
+    return render_template('pacjenci/dopisz.html')
+
+@app.route('/pacjenci_wyszukaj')
+def pacjenci_wyszukaj_page():
+    pacjent = Pacjenci.query.all()
+    return render_template('pacjenci/wyszukaj.html', Pacjenci=pacjent)
 
 ## RAPORTY
 
@@ -94,16 +103,16 @@ def pacjenci_dopisz_page():
 def slowniki_oddzialy_page():
     return render_template('modules.html')
 
-@app.route('/add_dodaj_uzytkownika', methods=['GET', 'POST'])
-def add_dodaj_uzytkownika_page():
+@app.route('/dodaj_uzytkownika', methods=['GET', 'POST'])
+def dodaj_uzytkownika_page():
     form = RegisterForm()
     if form.validate_on_submit():
         uzytkownik_to_create = Uzytkownicy(nazwisko=form.nazwisko.data,
-                                imie=form.imie.data,
-                                pwz=form.pwz.data,
-                                tytul_naukowy=form.tytul_naukowy.data,
-                                uprawnienia=form.uprawnienia.data,
-                                haslo=form.haslo.data)
+                                            imie=form.imie.data,
+                                            pwz=form.pwz.data,
+                                            tytul_naukowy=form.tytul_naukowy.data,
+                                            uprawnienia=form.uprawnienia.data,
+                                            haslo=form.haslo.data)
         db.session.add(uzytkownik_to_create)
         db.session.commit()
         flash(f"Użytkownik dodany pomyslnie!", category='success')
@@ -113,59 +122,23 @@ def add_dodaj_uzytkownika_page():
         for err_msg in form.errors.values():
             flash(f'Bląd dodania użytkownika: {err_msg}', category='danger')
 
-    return render_template('add/dodaj_uzytkownika.html', form=form)
+    return render_template('dodaj/uzytkownika.html', form=form)
 
 @app.route('/slowniki_uzytkownicy')
 def slowniki_uzytkownicy_page():
-    user = Uzytkownicy.query.all()
-    return render_template('slowniki/uzytkownicy.html', Uzytkownicy=user)
+    uzytkownik = Uzytkownicy.query.all()
+    return render_template('slowniki/uzytkownicy.html', Uzytkownicy=uzytkownik)
 
 @app.route('/slowniki_wlasciciel')
 def slowniki_wlasciciel_page():
-    return render_template('slowniki/owner.html')  
+    owner = Owners.query.all()
+    return render_template('slowniki/owner.html', Owner=owner)  
 
 #### MODULY
 
 @app.route('/moduly')
 def modules_page():
-    return render_template('slowniki/oddzialy.html')
-
-# --
-
-@app.route('/farmaceuta')
-def farm_page():
-    return render_template('farm.html')
-
-@app.route('/pielegniarki')
-def nurse_page():
-    return render_template('nurse.html')
-
-#@app.route('/doktorzy')
-#def doktorzy_page():
- #   doctor = Doctors.query.all()
- #   return render_template('doktorzy.html', Doctors=doctor)
-
-# DODAWANIE
-
-#@app.route('/dodaj_doktor', methods=['GET', 'POST'])
-#def add_doctor_page():
-#    form = RegisterForm()
-#    if form.validate_on_submit():
- #       doctor_to_create = Doctors(nazwisko=form.nazwisko.data,
- #                                  imie=form.imie.data,
- #                                  nr=form.nr.data)
-#        db.session.add(doctor_to_create)
-#       db.session.commit()
-#        flash(f"Doktor dodany pomyslnie!", category='success')
- #       return redirect(url_for('iszlc_page'))
-
- #   if form.errors != {}: #Jesli nie ma bledow z validatora
- #       for err_msg in form.errors.values():
- #           flash(f'Bląd dodania doktora: {err_msg}', category='danger')
-#
- #   return render_template('add/add_doctor.html', form=form)
-
-
+    return render_template('modules.html')
 
 
 ## PDF
