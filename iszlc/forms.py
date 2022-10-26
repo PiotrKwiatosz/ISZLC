@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
-from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
+from wtforms.validators import Length, EqualTo, DataRequired, ValidationError
 from iszlc.models import Uzytkownicy, Pacjenci, Leki
 
 ## PACJENT
@@ -22,11 +22,11 @@ class RegisterForm(FlaskForm):
     pesel = StringField(label='PESEL:', validators=[Length(min=11), DataRequired()])
     data_urodzenia = StringField(label='Data urodzenia:', validators=[Length(min=8, max=10)])
     badanie = StringField(label='Badanie:', validators=[DataRequired()])
-    pnr_w_badaniu = StringField(label='Numer w badaniu:', validators=[Length(min=1), DataRequired()])
+    nr_w_badaniu = StringField(label='Numer w badaniu:', validators=[Length(min=1), DataRequired()])
     
     submit = SubmitField(label='Dodaj!')
 
-## USERS
+## UZYTKOWNIK
 class RegisterForm(FlaskForm):
     def validate_nazwisko(self, nazwisko_to_check):
         nazwisko = Uzytkownicy.query.filter_by(nazwisko=nazwisko_to_check.data).first()
@@ -38,9 +38,8 @@ class RegisterForm(FlaskForm):
         if pwz:
             raise ValidationError('Podany aktualnie istnieje! Prosze sprobuj inny numer')
 
-
-    nazwisko = StringField(label='Nazwisko użytkownika:', validators=[Length(min=4, max=60), DataRequired()])
     imie = StringField(label='Imię użytkownika:', validators=[Length(min=2, max=30), DataRequired()])
+    nazwisko = StringField(label='Nazwisko użytkownika:', validators=[Length(min=4, max=60), DataRequired()])
     pwz = StringField(label='PWZ:', validators=[Length(min=4), DataRequired()])
     tytul_naukowy = StringField(label='Tytuł naukowy:', validators=[Length(min=2), DataRequired()])
     uprawnienia = StringField(label='Uprawnienia:', validators=[Length(min=4), DataRequired()])
@@ -51,13 +50,13 @@ class RegisterForm(FlaskForm):
 ## LEKI
 
 class RegisterForm(FlaskForm):
-    def validate_nazwisko(self, nazwisko_to_check):
-        nazwa_miedzynarodowa = Leki.query.filter_by(nazwisko=nazwisko_to_check.data).first()
+    def validate_nazwisko(self, nazwa_miedzynarodowa_to_check):
+        nazwa_miedzynarodowa = Leki.query.filter_by(nazwa_miedzynarodowa=nazwa_miedzynarodowa_to_check.data).first()
         if nazwa_miedzynarodowa:
             raise ValidationError('Lek już istnieje! Prosze sprobuj inną nazwe leku')
 
-    def validate_pwz(self, pwz_to_check):
-        ean = Leki.query.filter_by(pwz=pwz_to_check.data).first()
+    def validate_pwz(self, ean_to_check):
+        ean = Leki.query.filter_by(ean=ean_to_check.data).first()
         if ean:
             raise ValidationError('Podany aktualnie istnieje! Prosze sprobuj inny numer')
 
