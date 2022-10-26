@@ -1,0 +1,36 @@
+% extends 'base.html' %}
+{% block title %}
+Strona dodawania LEKÓW
+{% endblock %}
+
+{% block content %}
+<body class="text-center">
+    <div class="container">
+        <form method="POST" class="form-register" style="color:white">
+            {{ form.hidden_tag() }}
+            <img class="mb-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7qqRevzB30TPvjw5LI7_8sgH8mxigfZ17MQ&usqp=CAU" alt="">
+            <h1 class="h3 mb-3 font-weight-normal">
+            </h1>
+            <br>
+            {{ form.nazwa_handlowa.label() }}
+            {{ form.nazwa_handlowa(class="form-control", placeholder="Nazwa handlowa leku") }}
+
+            {{ form.nazwa_miedzynarodowa.label() }}
+            {{ form.nazwa_miedzynarodowa(class="form-control", placeholder="Nazwa międzynarodowa leku") }}
+
+            {{ form.ean.label() }}
+            {{ form.ean(class="form-control", placeholder="EAN") }}
+            <br>
+                <div class="checkbox mb-3">
+            <br><br>
+            {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+            <br>
+            <div class="checkbox mb-3">
+                <h6>Już jest?</h6>
+                <a class="btn btn-sm btn-secondary" href="{{ url_for('leki/wyszukaj_page') }}">
+                    Lista leków</a>
+                    <br><br>
+        </form>
+    </div>
+</body>
+{% endblock %}
