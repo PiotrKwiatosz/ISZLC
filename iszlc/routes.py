@@ -1,7 +1,7 @@
 from iszlc import app
 from flask import render_template, redirect, url_for, flash, request
 from iszlc.models import Leki, Pacjenci, Uzytkownicy, Owners
-from iszlc.forms import RegisterForm
+from iszlc.forms import RegisterForm, RegisterUserForm, RegisterDrugForm
 from iszlc import db
 
 @app.route('/')
@@ -22,9 +22,9 @@ def leki_wyszukaj_page():
     lek = Leki.query.all()
     return render_template('leki/wyszukaj.html', Leki=lek)
 
-@app.route('/leki_dopisz', methods=['GET', 'POST'])
-def leki_dopisz_page():
-    form = RegisterForm()
+@app.route('/dodaj_leki', methods=['GET', 'POST'])
+def dodaj_leki_page():
+    form = RegisterDrugForm()
     if form.validate_on_submit():
         lek_to_create = Leki(ean=form.ean.data,
                             nazwa_handlowa=form.nazwa_handlowa.data,
@@ -39,11 +39,11 @@ def leki_dopisz_page():
         for err_msg in form.errors.values():
             flash(f'Bląd dodania leku: {err_msg}', category='danger')
 
-    return render_template('leki/dopisz.html', form=form)
+    return render_template('dodaj/leki.html', form=form)
 
-@app.route('/dodaj_leki')
-def dodaj_leki_page():
-    return render_template('dodaj/leki.html')
+@app.route('/leki_dopisz')
+def leki_dopisz_page():
+    return render_template('leki/dopisz.html')
 
 ## RECEPTY
 
@@ -63,7 +63,7 @@ def recepty_drukuj_page():
 
 ## PACJENCI
 
-@app.route('/dodaj_pacjenta_dopisz', methods=['GET', 'POST'])
+@app.route('/dodaj_pacjenta', methods=['GET', 'POST'])
 def dodaj_pacjenta_page():
     form = RegisterForm()
     if form.validate_on_submit():
@@ -105,7 +105,7 @@ def slowniki_oddzialy_page():
 
 @app.route('/dodaj_uzytkownika', methods=['GET', 'POST'])
 def dodaj_uzytkownika_page():
-    form = RegisterForm()
+    form = RegisterUserForm()
     if form.validate_on_submit():
         uzytkownik_to_create = Uzytkownicy(nazwisko=form.nazwisko.data,
                                             imie=form.imie.data,
@@ -132,7 +132,7 @@ def slowniki_uzytkownicy_page():
 @app.route('/slowniki_wlasciciel')
 def slowniki_wlasciciel_page():
     owner = Owners.query.all()
-    return render_template('slowniki/owner.html', Owner=owner)  
+    return render_template('slowniki/owner.html', Owners=owner)  
 
 #### MODULY
 
@@ -140,6 +140,11 @@ def slowniki_wlasciciel_page():
 def modules_page():
     return render_template('modules.html')
 
+### LOGIN
+
+@app.route('/zaloguj')
+def login_page():
+    return render_template('login.html')
 
 ## PDF
 
