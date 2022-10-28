@@ -27,7 +27,7 @@ class RegisterForm(FlaskForm):
     submit = SubmitField(label='Dodaj!')
 
 ## UZYTKOWNIK
-class RegisterForm(FlaskForm):
+class RegisterUserForm(FlaskForm):
     def validate_nazwisko(self, nazwisko_to_check):
         nazwisko = Uzytkownicy.query.filter_by(nazwisko=nazwisko_to_check.data).first()
         if nazwisko:
@@ -38,8 +38,8 @@ class RegisterForm(FlaskForm):
         if pwz:
             raise ValidationError('Podany aktualnie istnieje! Prosze sprobuj inny numer')
 
-    imie = StringField(label='Imię użytkownika:', validators=[Length(min=2, max=30), DataRequired()])
     nazwisko = StringField(label='Nazwisko użytkownika:', validators=[Length(min=4, max=60), DataRequired()])
+    imie = StringField(label='Imię użytkownika:', validators=[Length(min=2, max=30), DataRequired()])
     pwz = StringField(label='PWZ:', validators=[Length(min=4), DataRequired()])
     tytul_naukowy = StringField(label='Tytuł naukowy:', validators=[Length(min=2), DataRequired()])
     uprawnienia = StringField(label='Uprawnienia:', validators=[Length(min=4), DataRequired()])
@@ -49,7 +49,7 @@ class RegisterForm(FlaskForm):
 
 ## LEKI
 
-class RegisterForm(FlaskForm):
+class RegisterDrugForm(FlaskForm):
     def validate_nazwisko(self, nazwa_miedzynarodowa_to_check):
         nazwa_miedzynarodowa = Leki.query.filter_by(nazwa_miedzynarodowa=nazwa_miedzynarodowa_to_check.data).first()
         if nazwa_miedzynarodowa:
