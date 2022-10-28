@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}
-    SŁOWNIKI -> Właściciel
+    Właściciel
 {% endblock %}
 
 {% block content %}
 
 <br>
-      <title>Właściciel:</title>
-      <br>
+    <title>Właściciel:</title>
+<br>
       
       <table class="table table-hover table-dark">
           <thead>
@@ -34,9 +34,6 @@
               </tr>
           {% endfor %}
       </table> 
-      <center>   
-         <a class="nav-link" href="{{ url_for('slowniki_wlasciciel_page') }}">
-        <img src="{{ url_for('static', filename='images/login_logo.png' )}}" width="500">
-      </center>
+
 
 {% endblock %}
