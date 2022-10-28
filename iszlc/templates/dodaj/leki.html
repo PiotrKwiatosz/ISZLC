@@ -1,4 +1,4 @@
-% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block title %}
 Strona dodawania LEKÓW
 {% endblock %}
@@ -27,7 +27,7 @@ Strona dodawania LEKÓW
             <br>
             <div class="checkbox mb-3">
                 <h6>Już jest?</h6>
-                <a class="btn btn-sm btn-secondary" href="{{ url_for('leki/wyszukaj_page') }}">
+                <a class="btn btn-sm btn-secondary" href="{{ url_for('leki_wyszukaj_page') }}">
                     Lista leków</a>
                     <br><br>
         </form>
