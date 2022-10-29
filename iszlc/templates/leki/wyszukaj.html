@@ -20,48 +20,29 @@
   <table class="table table-hover table-dark">
     <thead>
       <tr>
-        <th scope="col">KOD</th>
-        <th scope="col">Kod EAN</th>
         <th scope="col">Nazwa handlowa</th>
         <th scope="col">Nazwa międzynarodowa</th>
-        <th scope="col">Dawka</th>
         <th scope="col">Producent</th>
-        <th scope="col">Substancja czynna</th>
-        <th scope="col">Zawartość substancji czynnej w 1 ml</th>
-        <th scope="col">Zawartość substancji czynnej w mg</th>
-        <th scope="col">Opis opakowania</th>
-        <th scope="col">Objętość opakowania w ml</th>
         <th scope="col">Postać</th>
-        <th scope="col">Barwa</th>
-        <th scope="col">Droga podania</th>
-        <th scope="col">Okres ważności rozcieńczonego roztworu wg producenta</th>
-        <th scope="col">Temperatura przechowywania rozcieńczonego roztworu wg producenta</th>
+        <th scope="col">Dawka</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
          <!-- Your rows inside the table HERE: -->
             {% for lek in Leki %}
-
+            {% include 'includes/items_modals.html' %}
                 <tr>
-                    <td>{{ lek.id_lek }}</td>
-                    <td>{{ lek.ean }}</td>
                     <td>{{ lek.nazwa_handlowa }}</td>
                     <td>{{ lek.nazwa_miedzynarodowa }}</td>
-                    <td>{{ lek.dawka }}</td>
                     <td>{{ lek.producent }}</td>
-                    <td>{{ lek.subst_czynns }}</td>
-                    <td>{{ lek.zawartosc_subst_ml }}</td>
-                    <td>{{ lek.zawartosc_subst_mg }}</td>
-                    <td>{{ lek.opis_op }}</td>
-                    <td>{{ lek.obj_op_ml }}</td>
                     <td>{{ lek.postac }}</td>
-                    <td>{{ lek.barwa }}</td>
-                    <td>{{ lek.droga_podania }}</td>
-                    <td>{{ lek.okres_waz_roz_rozt_prod }}</td>
-                    <td>{{ lek.temp_prz_rozc_rozt_prod }}</td>
+                    <td>{{ lek.dawka }}</td>
                     <td>
-                      <a class="btn btn-outline btn-warning" href="#">POKAŻ</a>
+                      <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo-{{ lek.id_lek }}">Wiecej...</button>
+                     <!--
+                       <a class="btn btn-outline btn-warning" href="{{ url_for('leki_pokaz_page') }}">POKAŻ</a>
+                    -->
                       <a class="btn btn-outline btn-danger" href="#">EDYTUJ</a>
                     </td> 
                 </tr>
