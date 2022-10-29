@@ -49,6 +49,16 @@ class Leki(db.Model):
 class Owners(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     nazwa = db.Column(db.String(length=30), nullable=True, unique=False)
+    jednostka = db.Column(db.String(length=30), nullable=True, unique=False)
+    ulica = db.Column(db.String(length=30), nullable=True, unique=False)
+    miasto = db.Column(db.String(length=30), nullable=True, unique=False)
 
     def __repr__(self):
         return f'Właściciel {self.nazwa}'
+
+class Oddzialy(db.Model):
+    id_odd = db.Column(db.Integer(), primary_key=True)
+    nazwa_odd = db.Column(db.String(length=30), nullable=True, unique=False)
+
+    def __repr__(self):
+        return f'Oddział {self.nazwa}'
