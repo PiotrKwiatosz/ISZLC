@@ -1,6 +1,7 @@
+from distutils.command.build_scripts import first_line_re
 from iszlc import app
 from flask import render_template, redirect, url_for, flash, request
-from iszlc.models import Leki, Pacjenci, Uzytkownicy, Owners
+from iszlc.models import Leki, Pacjenci, Uzytkownicy, Owners, Oddzialy
 from iszlc.forms import RegisterForm, RegisterUserForm, RegisterDrugForm
 from iszlc import db
 
@@ -44,6 +45,11 @@ def dodaj_leki_page():
 @app.route('/leki_dopisz')
 def leki_dopisz_page():
     return render_template('leki/dopisz.html')
+
+@app.route('/leki_pokaz')
+def leki_pokaz_page():
+    lek = Leki.query.filter_by(id_lek=1)
+    return render_template('leki/pokaz.html', Leki=lek)
 
 ## RECEPTY
 
@@ -101,7 +107,8 @@ def pacjenci_wyszukaj_page():
 
 @app.route('/slowniki_oddzialy')
 def slowniki_oddzialy_page():
-    return render_template('modules.html')
+    oddzial = Oddzialy.query.all()
+    return render_template('slowniki/oddzialy.html', Oddzialy=oddzial)
 
 @app.route('/dodaj_uzytkownika', methods=['GET', 'POST'])
 def dodaj_uzytkownika_page():
@@ -132,7 +139,12 @@ def slowniki_uzytkownicy_page():
 @app.route('/slowniki_wlasciciel')
 def slowniki_wlasciciel_page():
     owner = Owners.query.all()
-    return render_template('slowniki/owner.html', Owners=owner)  
+    return render_template('slowniki/owner.html', Owners=owner)
+
+@app.route('/slowniki_wlasciciel_edytuj')
+def slowniki_wlasciciel_edytuj_page():
+    owner = Owners.query.all()
+    return render_template('slowniki/owner-edytuj.html', Owners=owner) 
 
 #### MODULY
 
