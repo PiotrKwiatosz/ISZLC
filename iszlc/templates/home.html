@@ -5,11 +5,15 @@
 
 {% block content %}
 
-<title>I.nformatyczny S.ystem Z.arządzania L.ekami C.ytotoksycznymi</title>
+<title>(I)nformatyczny (S)ystem (Z)arządzania (L)ekami (C)ytotoksycznymi</title>
 
-    <center>
+<head>
+    <meta http-equiv="refresh" content="10; moduly" />
+</head>
+
+<center>
    <a class="nav-link" href="{{ url_for('modules_page') }}">
     <img src="{{ url_for('static', filename='images/intro.svg' )}}" width="">
-    </center>
+</center>
 
 {% endblock %}
