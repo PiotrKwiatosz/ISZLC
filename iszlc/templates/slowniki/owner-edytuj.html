@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}
+    Właściciel - Dopisz/Edytuj
+{% endblock %}
+
+{% block content %}
+
+<br>
+    <title>Właściciel - Dopisz/Edytuj</title>
+<br>
+      
+      <table class="table table-hover table-dark">
+          <thead>
+              <tr>
+          <!-- Your Columns HERE -->
+                  <th scope="col">ID</th>
+                  <th scope="col">Nazwa</th>
+                  <th scope="col">Jednostka</th>
+                  <th scope="col">Ulica</th>
+                  <th scope="col">Miasto</th>   
+              </tr>
+          </thead>
+      
+          <!-- Your rows inside the table HERE: -->
+          {% for owner in Owners %}
+      
+              <tr>
+                  <td>{{ owner.id }}</td>
+                  <td>{{ owner.nazwa }}</td>
+                  <td>{{ owner.jednostka }}</td>
+                  <td>{{ owner.ulica }}</td>
+                  <td>{{ owner.miasto }}</td>
+                  <td>
+                      <button class="btn btn-outline btn-warning">Zmień</button>
+      
+                      <a class="btn btn-outline btn-danger"
+                      href="#">Usuń</a>
+                      
+                  </td>
+              </tr>
+          {% endfor %}
+      </table> 
+
+
+{% endblock %}
