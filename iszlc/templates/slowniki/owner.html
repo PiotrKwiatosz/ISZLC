@@ -25,11 +25,8 @@
                   <td>{{ owner.id }}</td>
                   <td>{{ owner.nazwa }}</td>
                   <td>
-                      <button class="btn btn-outline btn-warning">Zmień</button>
-      
-                      <a class="btn btn-outline btn-danger"
-                      href="#">Usuń</a>
-                      
+                      <a class="btn btn-outline btn-warning"
+                      href="{{ url_for('slowniki_wlasciciel_edytuj_page') }}">Zmień</a>                     
                   </td>
               </tr>
           {% endfor %}
