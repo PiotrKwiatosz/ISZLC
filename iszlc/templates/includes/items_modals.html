@@ -5,51 +5,68 @@
   </style>
   
   <!-- More Info -->
-  <div class="modal fade" id="Modal-MoreInfo-{{ item.id }}"
+  <div class="modal fade" id="Modal-MoreInfo-{{ lek.id_lek }}"
        tabindex="-1"
        aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="ModalLabel">
-            <!-- -->
-            {{ item.name }}
+            {{ lek.nazwa_handlowa }}
           </h5>
           <button type="button" class="close"
                   data-dismiss="modal" aria-label="Zamknij">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          {{ item.description }}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"
-                  data-dismiss="modal">Zamknij
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Purchase Confirm -->
-  <div class="modal fade" id="Modal-PurchaseConfirm-{{ item.id }}"
-       tabindex="-1"
-       aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="ModalLabel">
-            <!-- -->
-            {{ item.name }}
-          </h5>
-          <button type="button" class="close"
-                  data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Czy jestes pewien ze chcesz kupic {{ item.name }} za {{ item.price }}$ ?
+        <div class="modal-body">          
+          ID: 
+          {{ lek.id_lek }}
+          <br>
+          Kod kreskowy: 
+          {{ lek.ean }}
+          <br>
+          Nazwa handlowa: 
+          {{ lek.nazwa_handlowa }}
+          <br>
+          Nazwa międzynarodowa:
+          {{ lek.nazwa_miedzynarodowa }}
+          <br>
+          Dawka:
+           {{ lek.dawka }}
+          <br>
+          Producent:
+           {{ lek.producent }}
+          <br>
+          Substancja:
+           czynna {{ lek.subst_czynna }}
+          <br>
+          Zawartość substancji czynnej w 1 ml:
+           {{ lek.zawartosc_subst_ml }}
+          <br>
+          Zawartość substancji czynnej w mg:
+           {{ lek.zawartosc_subst_mg }}
+          <br>
+          Opis opakowania:
+           {{ lek.opis_op }}
+          <br>
+          Objętość opakowania w ml:
+           {{ lek.obj_op_ml }}
+          <br>
+          Postać:
+           {{ lek.postac }}
+          <br>
+          Barwa:
+           {{ lek.barwa }}
+          <br>
+          Droga podania:
+           {{ lek.droga_podania }}
+          <br>
+          Okres ważności rozcieńczonego roztworu wg producenta:
+          {{ lek.okres_waz_roz_rozt_prod }}
+          <br>
+          Temperatura przechowywania rozcieńczonego roztworu wg producenta:
+          {{ lek.temp_prz_rozc_prod }}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary"
