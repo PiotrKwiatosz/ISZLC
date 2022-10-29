@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}
+    Dane LEKU
+{% endblock %}
+
+{% block content %}
+
+<title>Dane Leku</title>
+
+<div class="input-group mb-3">
+    </div>
+
+  <!-- Your columns inside the table HERE: -->
+  <table class="table table-hover table-dark">
+    <thead>
+        {% for lek in Leki %}
+      <tr>
+        <th scope="col">KOD</th>
+        <td>{{ lek.id_lek }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Kod EAN</th>
+        <td>{{ lek.ean }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Nazwa handlowa</th>
+        <td>{{ lek.nazwa_handlowa }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Nazwa międzynarodowa</th>
+        <td>{{ lek.nazwa_miedzynarodowa }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Dawaka</th>
+        <td>{{ lek.dawka }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Producent</th>
+        <td>{{ lek.producent }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Substancja czynna</th>
+        <td>{{ lek.subst_czynna }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Zawartość substancji czynnej w 1 ml</th>
+        <td>{{ lek.zawartosc_subst_ml }}</td>
+    <tr>
+        <th scope="col">Zawartość substancji czynnej w mg</th>
+        <td>{{ lek.zawartosc_subst_mg }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Opis opakowania</th>
+        <td>{{ lek.opis_op }}</td>
+    <tr>
+        <th scope="col">Objętość opakowania w ml</th>
+        <td>{{ lek.obj_op_ml }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Postać</th>
+        <td>{{ lek.postac }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Barwa</th>
+        <td>{{ lek.barwa }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Droga podania</th>
+        <td>{{ lek.droga_podania }}</td>
+    </tr>
+    <tr>
+        <th scope="col">Okres ważności rozcieńczonego roztworu wg producenta</th>
+        <td>{{ lek.okres_waz_roz_rozt_prod }}</td>
+    <tr>
+        <th scope="col">Temperatura przechowywania rozcieńczonego roztworu wg producenta</th>
+        <td>{{ lek.temp_prz_rozc_prod }}</td>
+    </tr>
+
+<tbody>
+    <tr> 
+        <td>
+            <a class="btn btn-outline btn-danger" href="#">EDYTUJ</a>
+        </td> 
+    </tr>
+    {% endfor %}   
+    </tbody>
+  </table>
+  <br><br><br><br>
+</div>
+{% endblock %}
