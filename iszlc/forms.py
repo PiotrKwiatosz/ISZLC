@@ -1,10 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import Length, EqualTo, DataRequired, ValidationError
+from wtforms import StringField, PasswordField,SubmitField
+from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
 from iszlc.models import Uzytkownicy, Pacjenci, Leki
 
 ## PACJENT
-class RegisterForm(FlaskForm):
+class RegisterPatientForm(FlaskForm):
     def validate_nazwisko(self, nazwisko_to_check):
         nazwisko = Pacjenci.query.filter_by(nazwisko=nazwisko_to_check.data).first()
         if nazwisko:
@@ -19,31 +19,10 @@ class RegisterForm(FlaskForm):
     nazwisko = StringField(label='Nazwisko:', validators=[Length(min=3, max=60), DataRequired()])
     pierwsze_imie = StringField(label='Imię (pierwsze):', validators=[Length(min=2, max=30), DataRequired()])
     drugie_imie = StringField(label='Drugie imię:', validators=[Length(min=2, max=30)])
-    pesel = StringField(label='PESEL:', validators=[Length(min=11), DataRequired()])
+    pesel = StringField(label='PESEL:', validators=[Length(min=10), DataRequired()])
     data_urodzenia = StringField(label='Data urodzenia:', validators=[Length(min=8, max=10)])
     badanie = StringField(label='Badanie:', validators=[DataRequired()])
     nr_w_badaniu = StringField(label='Numer w badaniu:', validators=[Length(min=1), DataRequired()])
-    
-    submit = SubmitField(label='Dodaj!')
-
-## UZYTKOWNIK
-class RegisterUserForm(FlaskForm):
-    def validate_nazwisko(self, nazwisko_to_check):
-        nazwisko = Uzytkownicy.query.filter_by(nazwisko=nazwisko_to_check.data).first()
-        if nazwisko:
-            raise ValidationError('Użytkownik aktualnie już istnieje! Prosze sprobuj inne nazwisko użykownika')
-
-    def validate_pwz(self, pwz_to_check):
-        pwz = Uzytkownicy.query.filter_by(pwz=pwz_to_check.data).first()
-        if pwz:
-            raise ValidationError('Podany aktualnie istnieje! Prosze sprobuj inny numer')
-
-    nazwisko = StringField(label='Nazwisko użytkownika:', validators=[Length(min=4, max=60), DataRequired()])
-    imie = StringField(label='Imię użytkownika:', validators=[Length(min=2, max=30), DataRequired()])
-    pwz = StringField(label='PWZ:', validators=[Length(min=4), DataRequired()])
-    tytul_naukowy = StringField(label='Tytuł naukowy:', validators=[Length(min=2), DataRequired()])
-    uprawnienia = StringField(label='Uprawnienia:', validators=[Length(min=4), DataRequired()])
-    haslo = StringField(label='Hasło:', validators=[Length(min=4), DataRequired()])
     
     submit = SubmitField(label='Dodaj!')
 
@@ -69,3 +48,33 @@ class RegisterDrugForm(FlaskForm):
     subst_czynna = StringField(label='Substancja czynna:', validators=[Length(min=4), DataRequired()])
     
     submit = SubmitField(label='Dodaj!')
+
+## UZYTKOWNIK
+class RegisterUserForm(FlaskForm):
+    def validate_nazwisko(self, nazwisko_to_check):
+        nazwisko = Uzytkownicy.query.filter_by(nazwisko=nazwisko_to_check.data).first()
+        if nazwisko:
+            raise ValidationError('Użytkownik aktualnie już istnieje! Prosze sprobuj inne nazwisko użykownika')
+
+    def validate_pwz(self, pwz_to_check):
+        pwz = Uzytkownicy.query.filter_by(pwz=pwz_to_check.data).first()
+        if pwz:
+            raise ValidationError('Podany aktualnie istnieje! Prosze sprobuj inny numer')
+
+    nazwisko = StringField(label='Nazwisko użytkownika:', validators=[Length(min=4, max=60), DataRequired()])
+    imie = StringField(label='Imię użytkownika:', validators=[Length(min=2, max=30), DataRequired()])
+    pwz = StringField(label='PWZ:', validators=[Length(min=4), DataRequired()])
+    tytul_naukowy = StringField(label='Tytuł naukowy:', validators=[Length(min=2), DataRequired()])
+    uprawnienia = StringField(label='Uprawnienia:', validators=[Length(min=4), DataRequired()])
+    haslo1 = PasswordField(label='Hasło:', validators=[Length(min=4), DataRequired()])
+    haslo2 = PasswordField(label='Powtórz hasło:', validators=[EqualTo('haslo1'), DataRequired()])
+    
+    submit = SubmitField(label='Dodaj!')
+
+    ## LOGIN
+class LoginForm(FlaskForm):
+    imie = StringField(label='Imię:', validators=[DataRequired()])
+    nazwisko = StringField(label='Nazwisko:', validators=[DataRequired()])
+    haslo = PasswordField(label='Haslo:', validators=[DataRequired()])
+
+    submit = SubmitField(label='Zaloguj się!')
