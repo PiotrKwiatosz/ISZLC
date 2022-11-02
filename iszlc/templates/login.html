@@ -8,26 +8,29 @@
     <div class="container">
         <form method="POST" class="form-signin" style="color:white">
             {{ form.hidden_tag() }}
-            <img class="mb-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzSvriUjkQM7tWWUdSKXNcOfIgvyGs_3tAjQ&usqp=CAU" alt="">
+            <img src="{{ url_for('static', filename='images/logo_iszlc.svg' )}}" width="">
             <h1 class="h3 mb-3 font-weight-normal">
-                Zaloguj sie
+                Zaloguj się:
             </h1>
             <br>
-            {{ form.username.label() }}
-            {{ form.username(class="form-control", placeholder="Nazwa użytkownika") }}
+            {{ form.nazwisko.label() }}
+            {{ form.nazwisko(class="form-control", placeholder="Nazwisko") }}
+
+            {{ form.imie.label() }}
+            {{ form.imie(class="form-control", placeholder="Imię") }}
 
             {{ form.password.label() }}
             {{ form.password(class="form-control", placeholder="Hasło") }}
 
-            <br>
-
-
-            <div class="checkbox mb-3">
-               <h6>Nie masz konta?</h6>
-               <a class="btn btn-sm btn-secondary" href="{{ url_for('register_page') }}">Zarejestruj</a>
-            </div>
+            <br><br>
 
             {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+
+            <br><br>
+            <div class="checkbox mb-3">
+                <h6>Nie masz konta?</h6>
+                <a class="btn btn-sm btn-secondary" href="{{ url_for('dodaj_uzytkownika_page') }}">Zarejestruj</a>
+             </div>
 
         </form>
     </div>
