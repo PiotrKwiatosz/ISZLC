@@ -8,7 +8,7 @@ Strona dodawania użytkownika
     <div class="container">
         <form method="POST" class="form-register" style="color:white">
             {{ form.hidden_tag() }}
-            <img class="mb-4" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7qqRevzB30TPvjw5LI7_8sgH8mxigfZ17MQ&usqp=CAU" alt="">
+            <img src="{{ url_for('static', filename='images/logo_iszlc.svg' )}}" width="400">
             <h1 class="h3 mb-3 font-weight-normal">
                 Dodaj UŻYTKOWNIKA
             </h1>
@@ -28,8 +28,11 @@ Strona dodawania użytkownika
             {{ form.uprawnienia.label() }}
             {{ form.uprawnienia(class="form-control", placeholder="Uprawnienia") }}
 
-            {{ form.haslo.label() }}
-            {{ form.haslo(class="form-control", placeholder="Hasło") }}
+            {{ form.password1.label() }}
+            {{ form.password1(class="form-control", placeholder="Hasło") }}
+
+            {{ form.password2.label() }}
+            {{ form.password2(class="form-control", placeholder="Powtórz hasło") }}
             <br>
             <div class="checkbox mb-3">
             <br>
