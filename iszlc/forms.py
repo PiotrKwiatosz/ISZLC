@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField,SubmitField
-from wtforms.validators import Length, EqualTo, Email, DataRequired, ValidationError
+from wtforms.validators import Length, EqualTo, DataRequired, ValidationError
 from iszlc.models import Uzytkownicy, Pacjenci, Leki
 
 ## PACJENT
@@ -59,15 +59,15 @@ class RegisterUserForm(FlaskForm):
     def validate_pwz(self, pwz_to_check):
         pwz = Uzytkownicy.query.filter_by(pwz=pwz_to_check.data).first()
         if pwz:
-            raise ValidationError('Podany aktualnie istnieje! Prosze sprobuj inny numer')
+            raise ValidationError('Podany aktualnie istnieje! Proszę spróbuj inny numer')
 
     nazwisko = StringField(label='Nazwisko użytkownika:', validators=[Length(min=4, max=60), DataRequired()])
     imie = StringField(label='Imię użytkownika:', validators=[Length(min=2, max=30), DataRequired()])
-    pwz = StringField(label='PWZ:', validators=[Length(min=4), DataRequired()])
-    tytul_naukowy = StringField(label='Tytuł naukowy:', validators=[Length(min=2), DataRequired()])
-    uprawnienia = StringField(label='Uprawnienia:', validators=[Length(min=4), DataRequired()])
-    haslo1 = PasswordField(label='Hasło:', validators=[Length(min=4), DataRequired()])
-    haslo2 = PasswordField(label='Powtórz hasło:', validators=[EqualTo('haslo1'), DataRequired()])
+    pwz = StringField(label='PWZ:')
+    tytul_naukowy = StringField(label='Tytuł naukowy:')
+    uprawnienia = StringField(label='Uprawnienia:')
+    password1 = PasswordField(label='Hasło:', validators=[Length(min=4), DataRequired()])
+    password2 = PasswordField(label='Powtórz hasło:', validators=[EqualTo('password1'), DataRequired()])
     
     submit = SubmitField(label='Dodaj!')
 
@@ -75,6 +75,6 @@ class RegisterUserForm(FlaskForm):
 class LoginForm(FlaskForm):
     imie = StringField(label='Imię:', validators=[DataRequired()])
     nazwisko = StringField(label='Nazwisko:', validators=[DataRequired()])
-    haslo = PasswordField(label='Haslo:', validators=[DataRequired()])
+    password = PasswordField(label='Haslo:', validators=[DataRequired()])
 
     submit = SubmitField(label='Zaloguj się!')
