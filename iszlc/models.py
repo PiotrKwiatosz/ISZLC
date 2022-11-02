@@ -1,4 +1,34 @@
-from iszlc import db
+from iszlc import db, login_manager
+from iszlc import bcrypt
+from flask_login import UserMixin
+
+
+@login_manager.user_loader
+def load_user(id_uzytkownik):
+    return Uzytkownicy.query.get(int(id_uzytkownik))
+
+class Uzytkownicy(db.Model, UserMixin):
+    id_uzytkownik = db.Column(db.Integer(), primary_key=True)
+    nazwisko = db.Column(db.String(length=60), nullable=True, unique=False)
+    imie = db.Column(db.String(length=30), nullable=True, unique=False)
+    pwz = db.Column(db.Integer(), nullable=True, unique=False)
+    tytul_naukowy = db.Column(db.String(), nullable=True, unique=False)
+    uprawnienia = db.Column(db.String(), nullable=True, unique=False)
+    password_hash = db.Column(db.String(length=30), nullable=False)
+    def get_id(self):
+           return (self.id_uzytkownik)
+
+    @property
+    def password(self):
+        return self.password
+
+    @password.setter
+    def password(self, plain_text_password):
+        self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
+
+    def check_password_correction(self, attempted_password):
+        return bcrypt.check_password_hash(self.password_hash, attempted_password)
+##
 
 class Pacjenci(db.Model):
     id_pacjent = db.Column(db.Integer(), primary_key=True, nullable=False, autoincrement=True, unique=True)
@@ -7,23 +37,11 @@ class Pacjenci(db.Model):
     drugie_imie = db.Column(db.String(length=30), nullable=True, unique=False)
     pesel = db.Column(db.Integer(), nullable=False, unique=True)
     data_urodzenia = db.Column(db.String(length=10), nullable=True, unique=False)
-    badanie = db.Column(db.String(), nullable=False, unique=False)
-    nr_w_badaniu = db.Column(db.Integer(), nullable=False, unique=True)
+    badanie = db.Column(db.String(), nullable=True, unique=False)
+    nr_w_badaniu = db.Column(db.Integer(), nullable=True, unique=True)
 
     def __repr__(self):
         return f'Pacjent {self.nazwisko}'
-
-class Uzytkownicy(db.Model):
-    id_uzytkownik = db.Column(db.Integer(), primary_key=True)
-    nazwisko = db.Column(db.String(length=60), nullable=True, unique=False)
-    imie = db.Column(db.String(length=30), nullable=True, unique=False)
-    pwz = db.Column(db.Integer(), nullable=True, unique=False)
-    tytul_naukowy = db.Column(db.String(), nullable=True, unique=False)
-    uprawnienia = db.Column(db.String(), nullable=True, unique=False)
-    haslo = db.Column(db.String(length=30), nullable=True, unique=False)
-
-    def __repr__(self):
-        return f'Uzytkownik {self.nazwisko}'
 
 class Leki(db.Model):
     id_lek = db.Column(db.Integer(), primary_key=True, autoincrement=True, nullable=False, unique=True)
