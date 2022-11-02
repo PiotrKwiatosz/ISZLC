@@ -1,9 +1,9 @@
-from distutils.command.build_scripts import first_line_re
 from iszlc import app
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash
 from iszlc.models import Leki, Pacjenci, Uzytkownicy, Owners, Oddzialy
-from iszlc.forms import RegisterForm, RegisterUserForm, RegisterDrugForm
+from iszlc.forms import RegisterPatientForm, RegisterUserForm, RegisterDrugForm, LoginForm
 from iszlc import db
+from flask_login import login_user, logout_user, login_required
 
 @app.route('/')
 @app.route('/home')
@@ -12,7 +12,8 @@ def home_page():
 
 #### GLOWNE
 
-@app.route('/iszlc')
+@app.route('/iszlc', methods=['GET', 'POST'])
+@login_required
 def iszlc_page():
     return render_template('iszlc.html')
 
@@ -29,8 +30,7 @@ def dodaj_leki_page():
     if form.validate_on_submit():
         lek_to_create = Leki(ean=form.ean.data,
                             nazwa_handlowa=form.nazwa_handlowa.data,
-                            nazwa_miedzynarodowa=form.nazwa_miedzynarodowa.data,
-                            )
+                            nazwa_miedzynarodowa=form.nazwa_miedzynarodowa.data)
         db.session.add(lek_to_create)
         db.session.commit()
         flash(f"Lek dodany pomyslnie!", category='success')
@@ -71,7 +71,7 @@ def recepty_drukuj_page():
 
 @app.route('/dodaj_pacjenta', methods=['GET', 'POST'])
 def dodaj_pacjenta_page():
-    form = RegisterForm()
+    form = RegisterPatientForm()
     if form.validate_on_submit():
         pacjent_to_create = Pacjenci(nazwisko=form.nazwisko.data,
                                     pierwsze_imie=form.pierwsze_imie.data,
@@ -79,8 +79,7 @@ def dodaj_pacjenta_page():
                                     pesel=form.pesel.data,
                                     data_urodzenia=form.data_urodzenia.data,
                                     badanie=form.badanie.data,
-                                    nr_w_badaniu=form.nr_w_badaniu.data,
-                                    )
+                                    nr_w_badaniu=form.nr_w_badaniu.data)
         db.session.add(pacjent_to_create)
         db.session.commit()
         flash(f"Pacjent dopisany pomyslnie!", category='success')
@@ -110,27 +109,6 @@ def slowniki_oddzialy_page():
     oddzial = Oddzialy.query.all()
     return render_template('slowniki/oddzialy.html', Oddzialy=oddzial)
 
-@app.route('/dodaj_uzytkownika', methods=['GET', 'POST'])
-def dodaj_uzytkownika_page():
-    form = RegisterUserForm()
-    if form.validate_on_submit():
-        uzytkownik_to_create = Uzytkownicy(nazwisko=form.nazwisko.data,
-                                            imie=form.imie.data,
-                                            pwz=form.pwz.data,
-                                            tytul_naukowy=form.tytul_naukowy.data,
-                                            uprawnienia=form.uprawnienia.data,
-                                            haslo=form.haslo.data)
-        db.session.add(uzytkownik_to_create)
-        db.session.commit()
-        flash(f"Użytkownik dodany pomyslnie!", category='success')
-        return redirect(url_for('slowniki_uzytkownicy_page'))
-
-    if form.errors != {}: #Jesli nie ma bledow z validatora
-        for err_msg in form.errors.values():
-            flash(f'Bląd dodania użytkownika: {err_msg}', category='danger')
-
-    return render_template('dodaj/uzytkownika.html', form=form)
-
 @app.route('/slowniki_uzytkownicy')
 def slowniki_uzytkownicy_page():
     uzytkownik = Uzytkownicy.query.all()
@@ -152,11 +130,50 @@ def slowniki_wlasciciel_edytuj_page():
 def modules_page():
     return render_template('modules.html')
 
-### LOGIN
+## LOGIN
 
-@app.route('/zaloguj')
+@app.route('/dodaj_uzytkownika', methods=['GET', 'POST'])
+def dodaj_uzytkownika_page():
+    form = RegisterUserForm()
+    if form.validate_on_submit():
+        uzytkownik_to_create = Uzytkownicy(nazwisko=form.nazwisko.data,
+                                            imie=form.imie.data,
+                                            pwz=form.pwz.data,
+                                            tytul_naukowy=form.tytul_naukowy.data,
+                                            uprawnienia=form.uprawnienia.data,
+                                            password=form.password1.data)
+        db.session.add(uzytkownik_to_create)
+        db.session.commit()
+        login_user(uzytkownik_to_create)
+        flash(f"Użytkownik dodany pomyslnie! Jesteś teraz zalogowany jako {uzytkownik_to_create.nazwisko}", category='success')
+        return redirect(url_for('iszlc_page'))
+
+    if form.errors != {}: #Jesli nie ma bledow z validatora
+        for err_msg in form.errors.values():
+            flash(f'Bląd dodania użytkownika: {err_msg}', category='danger')
+
+    return render_template('dodaj/uzytkownika.html', form=form)           
+
+@app.route('/login', methods=['GET', 'POST'])
 def login_page():
-    return render_template('login.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        attempted_user = Uzytkownicy.query.filter_by(nazwisko=form.nazwisko.data).first()
+        if attempted_user and attempted_user.check_password_correction(
+                attempted_password=form.password.data):
+            login_user(attempted_user)
+            flash(f'Sukces! Zalogowales sie jako: {attempted_user.nazwisko}', category='success')
+            return redirect(url_for('iszlc_page'))
+        else:
+            flash('Uzytkownik i haslo nie pasuja! Sprobuj jeszcze raz', category='danger')
+
+    return render_template('login.html', form=form)
+
+@app.route('/logout')
+def logout_page():
+    logout_user()
+    flash("Właśnie się wylogowałeś!", category='info')
+    return redirect(url_for("home_page"))
 
 ## PDF
 
