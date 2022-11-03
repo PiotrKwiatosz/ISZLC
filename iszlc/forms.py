@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField,SubmitField
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import Length, EqualTo, DataRequired, ValidationError
 from iszlc.models import Uzytkownicy, Pacjenci, Leki
 
@@ -71,10 +71,15 @@ class RegisterUserForm(FlaskForm):
     
     submit = SubmitField(label='Dodaj!')
 
-    ## LOGIN
+## LOGIN
 class LoginForm(FlaskForm):
     imie = StringField(label='Imię:', validators=[DataRequired()])
     nazwisko = StringField(label='Nazwisko:', validators=[DataRequired()])
     password = PasswordField(label='Haslo:', validators=[DataRequired()])
 
     submit = SubmitField(label='Zaloguj się!')
+
+## WYSZUKIWANIE
+class SearchForm(FlaskForm):
+	searched = StringField("Szukane:", validators=[DataRequired()])
+	submit = SubmitField("Szukaj!")
