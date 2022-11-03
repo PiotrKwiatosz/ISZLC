@@ -4,13 +4,15 @@
 {% endblock %}
 
 {% block content %}
-<body class="text-center">
-    <div class="container">
+
+<div class="row" style="margin-top:60px; margin-left:40px">
+    <div class="col-4">
+    <body class="text-center">
+
         <form method="POST" class="form-signin" style="color:white">
             {{ form.hidden_tag() }}
-            <img src="{{ url_for('static', filename='images/logo_iszlc.svg' )}}" width="">
             <h1 class="h3 mb-3 font-weight-normal">
-                Zaloguj się:
+                Zaloguj się, aby rozpocząć pracę:
             </h1>
             <br>
             {{ form.nazwisko.label() }}
@@ -31,8 +33,19 @@
                 <h6>Nie masz konta?</h6>
                 <a class="btn btn-sm btn-secondary" href="{{ url_for('dodaj_uzytkownika_page') }}">Zarejestruj</a>
              </div>
-
         </form>
     </div>
+    <div class="col-6">
+        <br>
+        <img src="{{ url_for('static', filename='images/logo_iszlc.svg' )}}" width="">
+        <br>
+        <div style="position: absolute; bottom: 0px; right: 0px;">
+        <text style="color: grey;">
+            <p align="right">
+            Wersja programu: <b>0.1</b>
+        <br>
+            Copyrights: <b>Piotr Kwiatosz</b>
+        </text></br>  
+    </div> 
 </body>
 {% endblock %}
