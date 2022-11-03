@@ -1,7 +1,7 @@
 from iszlc import app
 from flask import render_template, redirect, url_for, flash
 from iszlc.models import Leki, Pacjenci, Uzytkownicy, Owners, Oddzialy
-from iszlc.forms import RegisterPatientForm, RegisterUserForm, RegisterDrugForm, LoginForm
+from iszlc.forms import RegisterPatientForm, RegisterUserForm, RegisterDrugForm, LoginForm, SearchForm
 from iszlc import db
 from flask_login import login_user, logout_user, login_required
 
@@ -16,6 +16,31 @@ def home_page():
 @login_required
 def iszlc_page():
     return render_template('iszlc.html')
+
+
+## SZUKAJ
+
+# Pass Stuff To Navbar
+@app.context_processor
+def base():
+	form = SearchForm()
+	return dict(form=form)
+
+@app.route('/leki_szukaj', methods=['POST'])
+def leki_szukaj():
+	form = SearchForm()
+	posts = Leki.query
+	if form.validate_on_submit():
+		# Get data from submitted form
+		posts.searched = form.searched.data
+		# Query the Database
+		posts = posts.filter(Leki.nazwa_handlowa.like('%' + posts.searched + '%'))
+		posts = posts.order_by(Leki.nazwa_handlowa).all()
+
+		return render_template('leki/szukaj.html', 		 
+        form=form, 		 
+        searched = posts.searched,
+		posts = posts)
 
 ## LEKI
 
@@ -45,11 +70,6 @@ def dodaj_leki_page():
 @app.route('/leki_dopisz')
 def leki_dopisz_page():
     return render_template('leki/dopisz.html')
-
-@app.route('/leki_pokaz')
-def leki_pokaz_page():
-    lek = Leki.query.filter_by(id_lek=1)
-    return render_template('leki/pokaz.html', Leki=lek)
 
 ## RECEPTY
 
@@ -145,7 +165,7 @@ def dodaj_uzytkownika_page():
         db.session.add(uzytkownik_to_create)
         db.session.commit()
         login_user(uzytkownik_to_create)
-        flash(f"Użytkownik dodany pomyslnie! Jesteś teraz zalogowany jako {uzytkownik_to_create.nazwisko}", category='success')
+        flash(f"Użytkownik dodany pomyślnie! Jesteś teraz zalogowany jako {uzytkownik_to_create.nazwisko}", category='success')
         return redirect(url_for('iszlc_page'))
 
     if form.errors != {}: #Jesli nie ma bledow z validatora
@@ -162,10 +182,10 @@ def login_page():
         if attempted_user and attempted_user.check_password_correction(
                 attempted_password=form.password.data):
             login_user(attempted_user)
-            flash(f'Sukces! Zalogowales sie jako: {attempted_user.nazwisko}', category='success')
+            flash(f'Sukces! Zalogowałeś sęe jako: {attempted_user.nazwisko}', category='success')
             return redirect(url_for('iszlc_page'))
         else:
-            flash('Uzytkownik i haslo nie pasuja! Sprobuj jeszcze raz', category='danger')
+            flash('Użytkownik i hasło nie pasują! Spróbuj jeszcze raz', category='danger')
 
     return render_template('login.html', form=form)
 
