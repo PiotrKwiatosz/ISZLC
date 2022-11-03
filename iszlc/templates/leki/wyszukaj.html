@@ -8,12 +8,12 @@
 <title>Leki - Wyszukaj</title>
 
 <br><br>
-<div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Nazwa:" aria-label="Nazwa:" aria-describedby="button-addon2">
-    <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button" id="button-addon2">Szukaj</button>
-    </div>
-  </div>
+
+<form method="POST" action="{{ url_for('leki_szukaj' )}}" class="d-flex">
+  {{ form.hidden_tag() }}
+  <input class="form-control me-2" type="search" placeholder="Szukaj:" aria-label="Szukaj:" name="searched">
+  <button class="btn btn-outline-secondary" type="submit">Szukaj:</button>
+</form>
 
 <br>
   <!-- Your columns inside the table HERE: -->
@@ -40,7 +40,6 @@
                     <td>{{ lek.dawka }}</td>
                     <td>
                       <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo-{{ lek.id_lek }}">Wiecej...</button>
-                      <a class="btn btn-outline btn-danger" href="#">EDYTUJ</a>
                     </td> 
                 </tr>
             {% endfor %}   
