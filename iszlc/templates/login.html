@@ -15,11 +15,8 @@
                 Zaloguj się, aby rozpocząć pracę:
             </h1>
             <br>
-            {{ form.nazwisko.label() }}
-            {{ form.nazwisko(class="form-control", placeholder="Nazwisko") }}
-
-            {{ form.imie.label() }}
-            {{ form.imie(class="form-control", placeholder="Imię") }}
+            {{ form.username.label() }}
+            {{ form.username(class="form-control", placeholder="Nazwa użytkownika") }}
 
             {{ form.password.label() }}
             {{ form.password(class="form-control", placeholder="Hasło") }}
@@ -34,9 +31,16 @@
                 <a class="btn btn-sm btn-secondary" href="{{ url_for('dodaj_uzytkownika_page') }}">Zarejestruj</a>
              </div>
         </form>
+        </body>
     </div>
     <div class="col-6">
         <br>
+        <b><text style="color:orangered;">I</b></text>nformatyczny<br>
+        <b><text style="color:orangered;"">S</b></text>ystem<br>
+        <b><text style="color:orangered;">Z</b></text>arządzania<br>
+        <b><text style="color:orangered;">L</b></text>ekami<br>
+        <b><text style="color:orangered;">C</b></text>ytotoksycznymi<br>
+
         <img src="{{ url_for('static', filename='images/logo_iszlc.svg' )}}" width="">
         <br>
         <div style="position: absolute; bottom: 0px; right: 0px;">
