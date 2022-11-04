@@ -16,6 +16,7 @@
         <tr>
     <!-- Your Columns HERE -->
             <th scope="col">ID</th>
+            <th scope="col">Nazwa użytkownika</th>
             <th scope="col">Imię</th>
             <th scope="col">Nazwisko</th>
             <th scope="col">PWZ</th>
@@ -29,6 +30,7 @@
     
        <tr>
             <td>{{ uzytkownik.id_uzytkownik }}</td>
+            <td>{{ uzytkownik.username }}</td>
             <td>{{ uzytkownik.imie }}</td>
             <td>{{ uzytkownik.nazwisko }}</td>
             <td>{{ uzytkownik.pwz }}</td>
@@ -36,9 +38,6 @@
             <td>{{ uzytkownik.uprawnienia }}</td>
             <td>
                 <button class="btn btn-outline btn-warning">Zmień</button>
-    
-                <a class="btn btn-outline btn-danger"
-                href="#">Usuń</a>
                     
             </td>
         </tr>
