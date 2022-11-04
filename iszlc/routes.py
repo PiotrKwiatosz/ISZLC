@@ -1,7 +1,9 @@
 from iszlc import app
 from flask import render_template, redirect, url_for, flash
-from iszlc.models import Leki, Pacjenci, Uzytkownicy, Owners, Oddzialy
-from iszlc.forms import RegisterPatientForm, RegisterUserForm, RegisterDrugForm, LoginForm, SearchForm
+from iszlc.models import Pacjenci, Recepty, Leki, Roztwory 
+from iszlc.models import Uzytkownicy, Owners, Oddzialy
+from iszlc.forms import RegisterUserForm, LoginForm, SearchForm
+from iszlc.forms import RegisterPatientForm, RegisterPrescriptForm, RegisterDrugForm, RegisterSolutionsForm
 from iszlc import db
 from flask_login import login_user, logout_user, login_required
 
@@ -29,18 +31,18 @@ def base():
 @app.route('/leki_szukaj', methods=['POST'])
 def leki_szukaj():
 	form = SearchForm()
-	posts = Leki.query
+	lek = Leki.query
 	if form.validate_on_submit():
 		# Get data from submitted form
-		posts.searched = form.searched.data
+		lek.searched = form.searched.data
 		# Query the Database
-		posts = posts.filter(Leki.nazwa_handlowa.like('%' + posts.searched + '%'))
-		posts = posts.order_by(Leki.nazwa_handlowa).all()
+		Leki = Leki.filter(Leki.nazwa_handlowa.like('%' + Leki.searched + '%'))
+		Leki = Leki.order_by(Leki.nazwa_handlowa).all()
 
 		return render_template('leki/szukaj.html', 		 
         form=form, 		 
-        searched = posts.searched,
-		posts = posts)
+        searched = Leki.searched,
+		posts = Leki)
 
 ## LEKI
 
@@ -58,7 +60,7 @@ def dodaj_leki_page():
                             nazwa_miedzynarodowa=form.nazwa_miedzynarodowa.data)
         db.session.add(lek_to_create)
         db.session.commit()
-        flash(f"Lek dodany pomyslnie!", category='success')
+        flash(f"Lek dodany pomyślnie!", category='success')
         return redirect(url_for('leki_wyszukaj_page'))
 
     if form.errors != {}: #Jesli nie ma bledow z validatora
@@ -73,9 +75,42 @@ def leki_dopisz_page():
 
 ## RECEPTY
 
+@app.route('/dodaj_recepta', methods=['GET', 'POST'])
+def dodaj_recepta_page():
+    form = RegisterPrescriptForm()
+    if form.validate_on_submit():
+        recepta_to_create = Recepty(nr_recepty=form.nr_recepty.data,
+                                    data_wypis=form.data_wypis.data,
+                                    data_wyprod=form.data_wyprod.data,
+                                    data_pod=form.data_pod.data,
+                                    id_pacjent=form.id_pacjent.data,
+                                    id_odd=form.id_odd.data,
+                                    id_lek=form.id_lek.data,
+                                    id_roztow=form.id_roztwor.dodaj_recepta_page,
+                                    droga_pod=form.droga_pod.data,
+                                    predkosc_pod=form.predkosc_pod.data,
+                                    data_waznosci=form.data_waznosci.data,
+                                    godz_waznosci=form.godzina_waznosci.data,
+                                    zatwierdzony=form.zatwierdzony.data)
+        db.session.add(recepta_to_create)
+        db.session.commit()
+        flash(f"Recepta dodana pomyślnie!", category='success')
+        return redirect(url_for('recepty_wyszukaj_page'))
+
+    if form.errors != {}: #Jesli nie ma bledow z validatora
+        for err_msg in form.errors.values():
+            flash(f'Bląd dodania recepty: {err_msg}', category='danger')
+
+    return render_template('dodaj/recepta.html', form=form)
+
+@app.route('/recepty_szukaj')
+def recepty_szukaj_page():
+    return render_template('recepty/szukaj.html')
+
 @app.route('/recepty_wyszukaj')
 def recepty_wyszukaj_page():
-    return render_template('recepty/wyszukaj.html')
+    recepta = Recepty.query.all()
+    return render_template('recepty/wyszukaj.html', Recepty=recepta)
 
 @app.route('/recepty_dopisz')
 def recepty_dopisz_page():
@@ -102,7 +137,7 @@ def dodaj_pacjenta_page():
                                     nr_w_badaniu=form.nr_w_badaniu.data)
         db.session.add(pacjent_to_create)
         db.session.commit()
-        flash(f"Pacjent dopisany pomyslnie!", category='success')
+        flash(f"Pacjent dopisany pomyślnie!", category='success')
         return redirect(url_for('iszlc_page'))
 
     if form.errors != {}: #Jesli nie ma bledow z validatora
@@ -156,7 +191,8 @@ def modules_page():
 def dodaj_uzytkownika_page():
     form = RegisterUserForm()
     if form.validate_on_submit():
-        uzytkownik_to_create = Uzytkownicy(nazwisko=form.nazwisko.data,
+        uzytkownik_to_create = Uzytkownicy(username=form.username.data,
+                                            nazwisko=form.nazwisko.data,
                                             imie=form.imie.data,
                                             pwz=form.pwz.data,
                                             tytul_naukowy=form.tytul_naukowy.data,
@@ -178,11 +214,11 @@ def dodaj_uzytkownika_page():
 def login_page():
     form = LoginForm()
     if form.validate_on_submit():
-        attempted_user = Uzytkownicy.query.filter_by(nazwisko=form.nazwisko.data).first()
+        attempted_user = Uzytkownicy.query.filter_by(username=form.username.data).first()
         if attempted_user and attempted_user.check_password_correction(
                 attempted_password=form.password.data):
             login_user(attempted_user)
-            flash(f'Sukces! Zalogowałeś sęe jako: {attempted_user.nazwisko}', category='success')
+            flash(f'Sukces! Zalogowałeś się jako: {attempted_user.username}', category='success')
             return redirect(url_for('iszlc_page'))
         else:
             flash('Użytkownik i hasło nie pasują! Spróbuj jeszcze raz', category='danger')
