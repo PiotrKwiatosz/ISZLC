@@ -9,6 +9,7 @@ def load_user(id_uzytkownik):
 
 class Uzytkownicy(db.Model, UserMixin):
     id_uzytkownik = db.Column(db.Integer(), primary_key=True)
+    username = db.Column(db.String(), nullable=False, unique=True)
     nazwisko = db.Column(db.String(length=60), nullable=True, unique=False)
     imie = db.Column(db.String(length=30), nullable=True, unique=False)
     pwz = db.Column(db.Integer(), nullable=True, unique=False)
@@ -43,6 +44,25 @@ class Pacjenci(db.Model):
     def __repr__(self):
         return f'Pacjent {self.nazwisko}'
 
+class Recepty(db.Model):
+    id_recepta = db.Column(db.Integer(), primary_key=True, nullable=False, autoincrement=True, unique=True)
+    nr_recepty = db.Column(db.Integer(), nullable=False, unique=True)
+    data_wypis = db.Column(db.String(), nullable=True, unique=False)
+    data_wyprod = db.Column(db.String(), nullable=True, unique=False)
+    data_pod = db.Column(db.String(), nullable=True, unique=False)
+    id_pacjent = db.Column(db.String(), db.ForeignKey('Pacjenci.id_pacjent'))
+    id_odd = db.Column(db.String(), db.ForeignKey('Oddzialy.id_odd'))
+    id_lek = db.Column(db.String(), db.ForeignKey('Leki.id_lek'))
+    id_roztwor = db.Column(db.String(), db.ForeignKey('Roztwory.id_roztwor'))
+    droga_pod = db.Column(db.String(), nullable=True, unique=False)
+    predkosc_pod = db.Column(db.String(), nullable=True, unique=False)
+    data_waz = db.Column(db.String(), nullable=True, unique=False)
+    godz_waz = db.Column(db.String(), nullable=True, unique=False)
+    zatwierdzony = db.Column(db.String(), nullable=True, unique=False)
+    
+    def __repr__(self):
+        return f'Recepta {self.nr_recepty}'
+
 class Leki(db.Model):
     id_lek = db.Column(db.Integer(), primary_key=True, autoincrement=True, nullable=False, unique=True)
     ean = db.Column(db.String(length=4), nullable=True, unique=True)
@@ -64,6 +84,25 @@ class Leki(db.Model):
     def __repr__(self):
         return f'Lek {self.nazwa_handlowa}'
 
+class Roztwory(db.Model):
+    id_roztwor = db.Column(db.Integer(), primary_key=True, autoincrement=True, nullable=False, unique=True)
+    ean = db.Column(db.String(length=4), nullable=True, unique=True)
+    nazwa_handlowa = db.Column(db.String(), nullable=True)
+    nazwa_miedzynarodowa = db.Column(db.String(), nullable=True, unique=False)
+    dawka = db.Column(db.String(), nullable=True, unique=False)
+    producent = db.Column(db.String(), nullable=True, unique=False)
+    subst_czynna = db.Column(db.String(), nullable=True, unique=False)
+    zawartosc_subst_ml = db.Column(db.String(), nullable=True, unique=False)
+    opis_op = db.Column(db.String(), nullable=True, unique=False)
+    obj_op_ml = db.Column(db.String(), nullable=True, unique=False)
+    postac = db.Column(db.String(), nullable=True, unique=False)
+    barwa = db.Column(db.String(), nullable=True, unique=False)
+    droga_pod = db.Column(db.String(), nullable=True, unique=False)
+    okres_waz_prod = db.Column(db.String(), nullable=True, unique=False)
+    temp_prz_prod = db.Column(db.String(), nullable=True, unique=False)
+
+    def __repr__(self):
+        return f'Roztwory {self.nazwa_handlowa}'
 class Owners(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     nazwa = db.Column(db.String(length=30), nullable=True, unique=False)
