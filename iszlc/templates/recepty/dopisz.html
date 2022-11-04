@@ -6,14 +6,16 @@
 {% block content %}
 
 <title>Recepty - Dopisz</title>
-    <center>
-    <!-- Witaj w  ISZLC! -->
-<br>
-DOPISZ RECEPTĘ
-<br>
-     <a class="nav-link" href="{{ url_for('iszlc_page') }}">
-    <img src="{{ url_for('static', filename='images/logo_iszlc.svg' )}}" width="400">
 
-    </center>
+<br><br>
+    <td>
+        <a class="btn btn-primary btn-lg btn-block btn-success" 
+            href="{{ url_for('dodaj_recepta_page') }}">Dopisz receptę!</a>
+    </td></p>
+</div>
+    <center>
+     <a class="nav-link" href="{{ url_for('dodaj_recepta_page') }}">
+    <img src="{{ url_for('static', filename='images/logo_iszlc.svg' )}}" width="400">
+     </center>
 
 {% endblock %}
