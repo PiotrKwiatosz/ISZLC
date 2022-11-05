@@ -42,7 +42,7 @@ def leki_szukaj():
 		return render_template('leki/szukaj.html', 		 
         form=form, 		 
         searched = Leki.searched,
-		posts = Leki)
+		Leki = lek)
 
 ## LEKI
 
