@@ -201,7 +201,7 @@ def dodaj_uzytkownika_page():
         db.session.add(uzytkownik_to_create)
         db.session.commit()
         login_user(uzytkownik_to_create)
-        flash(f"Użytkownik dodany pomyślnie! Jesteś teraz zalogowany jako {uzytkownik_to_create.nazwisko}", category='success')
+        flash(f"Użytkownik dodany pomyślnie! Jesteś teraz zalogowany jako {uzytkownik_to_create.username}", category='success')
         return redirect(url_for('iszlc_page'))
 
     if form.errors != {}: #Jesli nie ma bledow z validatora
