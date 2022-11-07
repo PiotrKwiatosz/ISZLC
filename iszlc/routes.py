@@ -69,10 +69,6 @@ def dodaj_leki_page():
 
     return render_template('dodaj/leki.html', form=form)
 
-@app.route('/leki_dopisz')
-def leki_dopisz_page():
-    return render_template('leki/dopisz.html')
-
 ## RECEPTY
 
 @app.route('/dodaj_recepta', methods=['GET', 'POST'])
@@ -112,10 +108,6 @@ def recepty_wyszukaj_page():
     recepta = Recepty.query.all()
     return render_template('recepty/wyszukaj.html', Recepty=recepta)
 
-@app.route('/recepty_dopisz')
-def recepty_dopisz_page():
-    return render_template('recepty/dopisz.html')
-
 @app.route('/recepty_drukuj')
 def recepty_drukuj_page():
     return render_template('recepty/drukuj.html')
@@ -145,10 +137,6 @@ def dodaj_pacjenta_page():
             flash(f'Bląd dopisywania pacjenta: {err_msg}', category='danger')
 
     return render_template('dodaj/pacjenta.html', form=form)
-
-@app.route('/pacjenci_dopisz')
-def pacjenci_dopisz_page():
-    return render_template('pacjenci/dopisz.html')
 
 @app.route('/pacjenci_wyszukaj')
 def pacjenci_wyszukaj_page():
