@@ -11,5 +11,6 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "login_page"
 login_manager.login_message_category = "info"
+login_manager.login_message = u"Zaloguj się, aby uzyskać dostęp do tej strony"
 
 from iszlc import routes
