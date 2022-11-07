@@ -9,7 +9,7 @@ def load_user(id_uzytkownik):
 
 class Uzytkownicy(db.Model, UserMixin):
     id_uzytkownik = db.Column(db.Integer(), primary_key=True)
-    username = db.Column(db.String(), nullable=False, unique=True)
+    username = db.Column(db.String(length=30), nullable=False, unique=True)
     nazwisko = db.Column(db.String(length=60), nullable=True, unique=False)
     imie = db.Column(db.String(length=30), nullable=True, unique=False)
     pwz = db.Column(db.Integer(), nullable=True, unique=False)
@@ -39,7 +39,7 @@ class Pacjenci(db.Model):
     pesel = db.Column(db.Integer(), nullable=False, unique=True)
     data_urodzenia = db.Column(db.String(length=10), nullable=True, unique=False)
     badanie = db.Column(db.String(), nullable=True, unique=False)
-    nr_w_badaniu = db.Column(db.Integer(), nullable=True, unique=True)
+    nr_w_badaniu = db.Column(db.Integer(), nullable=False, unique=True)
 
     def __repr__(self):
         return f'Pacjent {self.nazwisko}'
@@ -66,7 +66,7 @@ class Recepty(db.Model):
 class Leki(db.Model):
     id_lek = db.Column(db.Integer(), primary_key=True, autoincrement=True, nullable=False, unique=True)
     ean = db.Column(db.String(length=4), nullable=True, unique=True)
-    nazwa_handlowa = db.Column(db.String(), nullable=True)
+    nazwa_handlowa = db.Column(db.String(), nullable=True, unique=False)
     nazwa_miedzynarodowa = db.Column(db.String(), nullable=True, unique=False)
     dawka = db.Column(db.String(), nullable=True, unique=False)
     producent = db.Column(db.String(), nullable=True, unique=False)
