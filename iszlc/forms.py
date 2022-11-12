@@ -10,11 +10,6 @@ class RegisterUserForm(FlaskForm):
         if username:
             raise ValidationError('Użytkownik aktualnie już istnieje! Prosze sprobuj inne nazwisko użykownika')
 
-    def validate_pwz(self, pwz_to_check):
-        pwz = Uzytkownicy.query.filter_by(pwz=pwz_to_check.data).first()
-        if pwz:
-            raise ValidationError('Podany aktualnie istnieje! Proszę spróbuj inny numer')
-
     username = StringField(label='Nazwa użytkownia:', validators=[Length(min=1, max=30), DataRequired()])
     nazwisko = StringField(label='Nazwisko:', validators=[Length(min=4, max=60), DataRequired()])
     imie = StringField(label='Imię:', validators=[Length(min=2, max=30), DataRequired()])
