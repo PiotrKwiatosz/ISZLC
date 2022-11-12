@@ -5,17 +5,18 @@ from flask_login import UserMixin
 
 @login_manager.user_loader
 def load_user(id_uzytkownik):
-    return Uzytkownicy.query.get(int(id_uzytkownik))
+    return Uzytkownicy.query.get(id_uzytkownik)
 
 class Uzytkownicy(db.Model, UserMixin):
-    id_uzytkownik = db.Column(db.Integer(), primary_key=True)
-    username = db.Column(db.String(length=30), nullable=False, unique=True)
-    nazwisko = db.Column(db.String(length=60), nullable=True, unique=False)
-    imie = db.Column(db.String(length=30), nullable=True, unique=False)
-    pwz = db.Column(db.Integer(), nullable=True, unique=False)
-    tytul_naukowy = db.Column(db.String(), nullable=True, unique=False)
-    uprawnienia = db.Column(db.String(), nullable=True, unique=False)
-    password_hash = db.Column(db.String(length=30), nullable=False)
+    id_uzytkownik = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(30), nullable=False, unique=True)
+    nazwisko = db.Column(db.String(60))
+    imie = db.Column(db.String(30))
+    pwz = db.Column(db.Integer)
+    tytul_naukowy = db.Column(db.String)
+    uprawnienia = db.Column(db.String)
+    password_hash = db.Column(db.String(60), nullable=False)
+    
     def get_id(self):
            return (self.id_uzytkownik)
 
@@ -32,14 +33,14 @@ class Uzytkownicy(db.Model, UserMixin):
 ##
 
 class Pacjenci(db.Model):
-    id_pacjent = db.Column(db.Integer(), primary_key=True, nullable=False, autoincrement=True, unique=True)
-    nazwisko = db.Column(db.String(length=60), nullable=False, unique=False)
-    pierwsze_imie = db.Column(db.String(length=30), nullable=False, unique=False)
-    drugie_imie = db.Column(db.String(length=30), nullable=True, unique=False)
-    pesel = db.Column(db.Integer(), nullable=False, unique=True)
-    data_urodzenia = db.Column(db.String(length=10), nullable=True, unique=False)
-    badanie = db.Column(db.String(), nullable=True, unique=False)
-    nr_w_badaniu = db.Column(db.Integer(), nullable=False, unique=True)
+    id_pacjent = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True, unique=True)
+    nazwisko = db.Column(db.String(60), nullable=False)
+    pierwsze_imie = db.Column(db.String(30), nullable=False)
+    drugie_imie = db.Column(db.String(30))
+    pesel = db.Column(db.Integer, nullable=False, unique=True)
+    data_urodzenia = db.Column(db.String(10))
+    badanie = db.Column(db.String)
+    nr_w_badaniu = db.Column(db.Integer, nullable=False, unique=True)
 
     def __repr__(self):
         return f'Pacjent {self.nazwisko}'
@@ -103,7 +104,8 @@ class Roztwory(db.Model):
 
     def __repr__(self):
         return f'Roztwory {self.nazwa_handlowa}'
-class Owners(db.Model):
+        
+class Wlasciciele(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     nazwa = db.Column(db.String(length=30), nullable=True, unique=False)
     jednostka = db.Column(db.String(length=30), nullable=True, unique=False)
