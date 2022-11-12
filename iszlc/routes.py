@@ -1,7 +1,7 @@
 from iszlc import app
 from flask import render_template, redirect, url_for, flash
 from iszlc.models import Pacjenci, Recepty, Leki, Roztwory 
-from iszlc.models import Uzytkownicy, Owners, Oddzialy
+from iszlc.models import Uzytkownicy, Wlasciciele, Oddzialy
 from iszlc.forms import RegisterUserForm, LoginForm, SearchForm
 from iszlc.forms import RegisterPatientForm, RegisterPrescriptForm, RegisterDrugForm, RegisterSolutionsForm
 from iszlc import db
@@ -18,6 +18,52 @@ def home_page():
 @login_required
 def iszlc_page():
     return render_template('iszlc.html')
+
+## LOGIN
+
+@app.route('/dodaj_uzytkownika', methods=['GET', 'POST'])
+def dodaj_uzytkownika_page():
+    form = RegisterUserForm()
+    if form.validate_on_submit():
+        uzytkownik_to_create = Uzytkownicy(username=form.username.data,
+                                            nazwisko=form.nazwisko.data,
+                                            imie=form.imie.data,
+                                            pwz=form.pwz.data,
+                                            tytul_naukowy=form.tytul_naukowy.data,
+                                            uprawnienia=form.uprawnienia.data,
+                                            password=form.password1.data)
+        db.session.add(uzytkownik_to_create)
+        db.session.commit()
+        login_user(uzytkownik_to_create)
+        flash(f"Użytkownik dodany pomyślnie! Jesteś teraz zalogowany jako {uzytkownik_to_create.username}", category='success')
+        return redirect(url_for('iszlc_page'))
+
+    if form.errors != {}: #Jesli nie ma bledow z validatora
+        for err_msg in form.errors.values():
+            flash(f'Bląd dodania użytkownika: {err_msg}', category='danger')
+
+    return render_template('dodaj/uzytkownika.html', form=form)           
+
+@app.route('/login', methods=['GET', 'POST'])
+def login_page():
+    form = LoginForm()
+    if form.validate_on_submit():
+        attempted_uzytkownik = Uzytkownicy.query.filter_by(username=form.username.data).first()
+        if attempted_uzytkownik and attempted_uzytkownik.check_password_correction(
+                attempted_password=form.password.data):
+            login_user(attempted_uzytkownik)
+            flash(f'Sukces! Zalogowałeś się jako: {attempted_uzytkownik.username}', category='success')
+            return redirect(url_for('iszlc_page'))
+        else:
+            flash('Użytkownik i hasło nie pasują! Spróbuj jeszcze raz', category='danger')
+
+    return render_template('login.html', form=form)
+
+@app.route('/logout')
+def logout_page():
+    logout_user()
+    flash("Właśnie się wylogowałeś!", category='info')
+    return redirect(url_for("home_page"))
 
 
 ## SZUKAJ
@@ -159,13 +205,13 @@ def slowniki_uzytkownicy_page():
 
 @app.route('/slowniki_wlasciciel')
 def slowniki_wlasciciel_page():
-    owner = Owners.query.all()
-    return render_template('slowniki/owner.html', Owners=owner)
+    wlasciciel = Wlasciciele.query.all()
+    return render_template('slowniki/wlasciciel.html', Wlasciciele=wlasciciel)
 
 @app.route('/slowniki_wlasciciel_edytuj')
 def slowniki_wlasciciel_edytuj_page():
-    owner = Owners.query.all()
-    return render_template('slowniki/owner-edytuj.html', Owners=owner) 
+    wlasciciel = Wlasciciele.query.all()
+    return render_template('slowniki/wlasciciel-edytuj.html', Wlasciciele=wlasciciel) 
 
 #### MODULY
 
@@ -173,51 +219,6 @@ def slowniki_wlasciciel_edytuj_page():
 def modules_page():
     return render_template('modules.html')
 
-## LOGIN
-
-@app.route('/dodaj_uzytkownika', methods=['GET', 'POST'])
-def dodaj_uzytkownika_page():
-    form = RegisterUserForm()
-    if form.validate_on_submit():
-        uzytkownik_to_create = Uzytkownicy(username=form.username.data,
-                                            nazwisko=form.nazwisko.data,
-                                            imie=form.imie.data,
-                                            pwz=form.pwz.data,
-                                            tytul_naukowy=form.tytul_naukowy.data,
-                                            uprawnienia=form.uprawnienia.data,
-                                            password=form.password1.data)
-        db.session.add(uzytkownik_to_create)
-        db.session.commit()
-        login_user(uzytkownik_to_create)
-        flash(f"Użytkownik dodany pomyślnie! Jesteś teraz zalogowany jako {uzytkownik_to_create.username}", category='success')
-        return redirect(url_for('iszlc_page'))
-
-    if form.errors != {}: #Jesli nie ma bledow z validatora
-        for err_msg in form.errors.values():
-            flash(f'Bląd dodania użytkownika: {err_msg}', category='danger')
-
-    return render_template('dodaj/uzytkownika.html', form=form)           
-
-@app.route('/login', methods=['GET', 'POST'])
-def login_page():
-    form = LoginForm()
-    if form.validate_on_submit():
-        attempted_user = Uzytkownicy.query.filter_by(username=form.username.data).first()
-        if attempted_user and attempted_user.check_password_correction(
-                attempted_password=form.password.data):
-            login_user(attempted_user)
-            flash(f'Sukces! Zalogowałeś się jako: {attempted_user.username}', category='success')
-            return redirect(url_for('iszlc_page'))
-        else:
-            flash('Użytkownik i hasło nie pasują! Spróbuj jeszcze raz', category='danger')
-
-    return render_template('login.html', form=form)
-
-@app.route('/logout')
-def logout_page():
-    logout_user()
-    flash("Właśnie się wylogowałeś!", category='info')
-    return redirect(url_for("home_page"))
 
 ## PDF
 
