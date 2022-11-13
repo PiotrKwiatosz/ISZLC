@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}
+Strona dodawania UŻYTKOWNIKA
+{% endblock %}
+
+{% block content %}
+<body class="text-center">
+    <div class="container">
+        <form method="POST" class="form-register" style="color:white">
+            {{ form.hidden_tag() }}
+            <img src="{{ url_for('static', filename='images/logo_iszlc.svg' )}}" width="400">
+            <h1 class="h3 mb-3 font-weight-normal">
+                Dodaj UŻYTKOWNIKA
+            </h1>
+            <br>
+            {{ form.username.label() }}
+            {{ form.username(class="form-control", placeholder="Nazwa użytkownika") }}
+
+            {{ form.imie.label() }}
+            {{ form.imie(class="form-control", placeholder="Imie") }}
+
+            {{ form.nazwisko.label() }}
+            {{ form.nazwisko(class="form-control", placeholder="Nazwisko") }}
+
+            {{ form.pwz.label() }}
+            {{ form.pwz(class="form-control", placeholder="PWZ") }}
+
+            {{ form.tytul_naukowy.label() }}
+            {{ form.tytul_naukowy(class="form-control", placeholder="Tytuł naukowy") }}
+
+            {{ form.uprawnienia.label() }}
+            {{ form.uprawnienia(class="form-control", placeholder="Uprawnienia") }}
+
+            {{ form.password1.label() }}
+            {{ form.password1(class="form-control", placeholder="Hasło") }}
+
+            {{ form.password2.label() }}
+            {{ form.password2(class="form-control", placeholder="Powtórz hasło") }}
+            <br>
+            <div class="checkbox mb-3">
+            <br>
+            {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+            <br>
+        </form>
+    </div>
+</body>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}
+    RECEPTY - Wyszukaj
+{% endblock %}
+
+{% block header %}
+    Recepty - Wyszukaj
+{% endblock %}
+
+{% block content %}
+
+<title>Recepty - Wyszukaj</title>
+
+<br><br>
+
+<form method="POST" action="{{ url_for('recepty_szukaj_page' )}}" class="d-flex">
+  {{ form.hidden_tag() }}
+  <input class="form-control me-2" type="search" placeholder="Szukaj:" aria-label="Szukaj:" name="searched">
+  <button class="btn btn-outline-secondary" type="submit">Szukaj:</button>
+</form>
+
+<title>Recepty:</title>
+<br>
+  <!-- Your columns inside the table HERE: -->
+  <table class="table table-hover table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Numer recepty</th>
+        <th scope="col">Data wypisania</th>
+        <th scope="col">Data wyprodukowania</th>
+        <th scope="col">Data podania</th>
+        <th scope="col">ID pacjenta</th>
+        <th scope="col">ID oddziału</th>
+        <th scope="col">ID leku</th>
+        <th scope="col">ID roztworu</th>
+        <th scope="col">Droga podania</th>
+        <th scope="col">Prędkość podania</th>
+        <th scope="col">Data ważności</th>
+        <th scope="col">Godzina ważności</th>
+        <th scope="col">Zatwierdzony</th>
+      </tr>
+    </thead>
+  
+         <!-- Your rows inside the table HERE: -->
+            {% for recepta in Recepty %}
+
+                <tr>
+                    <td>{{ recepta.nr_recepty }}</td>
+                    <td>{{ recepta.data_wypis }}</td>
+                    <td>{{ recepta.data_wyprod }}</td>
+                    <td>{{ recepta.data_pod }}</td>
+                    <td>{{ recepta.id_pacjent }}</td>
+                    <td>{{ recepta.id_odd }}</td>
+                    <td>{{ recepta.id_lek }}</td>
+                    <td>{{ recepta.id_roztwor }}</td>
+                    <td>{{ recepta.droga_pod }}</td>
+                    <td>{{ recepta.predkosc_pod }}</td>
+                    <td>{{ recepta.data_waz }}</td>
+                    <td>{{ recepta.godz_waz }}</td>
+                    <td>{{ recepta.zatwierdzony }}</td>
+                    <td>
+                      <button class="btn btn-outline btn-warning">Zmień</button>
+      
+                      <a class="btn btn-outline btn-danger"
+                      href="#">Usuń</a>
+                      
+                  </td>  
+                </tr>
+            {% endfor %}   
+  </table>   
+          </div>
+      </form>
+      
+{% endblock %}

@@ -1,0 +1,83 @@
+<style>
+    .modal-content {
+      background-color: #212121
+    }
+  </style>
+  
+  <!-- More Info -->
+  <div class="modal fade" id="Modal-MoreInfo-{{ lek.id_lek }}"
+       tabindex="-1"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModalLabel">
+            {{ lek.nazwa_handlowa }}
+          </h5>
+          <button type="button" class="close"
+                  data-dismiss="modal" aria-label="Zamknij">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">          
+          ID: 
+          <text style="color:yellow;">{{ lek.id_lek }}</text>
+          <br>
+          Kod kreskowy: 
+          <text style="color:yellow;">{{ lek.ean }}</text>
+          <br>
+          Nazwa handlowa:
+          <text style="color:yellow;">{{ lek.nazwa_handlowa }}</text>
+          <br>
+          Nazwa międzynarodowa:
+          <text style="color:yellow;">{{ lek.nazwa_miedzynarodowa }}</text>
+          <br>
+          Dawka:
+          <text style="color:yellow;">{{ lek.dawka }}</text>
+          <br>
+          Producent:
+          <text style="color:yellow;">{{ lek.producent }}</text>
+          <br>
+          Substancja czynna:
+          <text style="color:yellow;">{{ lek.subst_czynna }}</text>
+          <br>
+          Zawartość substancji czynnej w 1 ml:
+          <text style="color:yellow;">{{ lek.zawartosc_subst_ml }}</text>
+          <br>
+          Zawartość substancji czynnej w mg:
+          <text style="color:yellow;">{{ lek.zawartosc_subst_mg }}</text>
+          <br>
+          Opis opakowania:
+          <text style="color:yellow;">{{ lek.opis_op }}</text>
+          <br>
+          Objętość opakowania w ml:
+          <text style="color:yellow;">{{ lek.obj_op_ml }}</text>
+          <br>
+          Postać:
+          <text style="color:yellow;">{{ lek.postac }}</text>
+          <br>
+          Barwa:
+          <text style="color:yellow;">{{ lek.barwa }}</text>
+          <br>
+          Droga podania:
+          <text style="color:yellow;">{{ lek.droga_podania }}</text>
+          <br>
+          Okres ważności rozcieńczonego roztworu 
+          <br>wg producenta:
+          <text style="color:yellow;">{{ lek.okres_waz_roz_rozt_prod }}</text>
+          <br>
+          Temperatura przechowywania rozcieńczonego roztworu
+          <br>wg producenta:
+          <text style="color:yellow;">{{ lek.temp_prz_rozc_rozt_prod }}</text>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning"
+                  data-dismiss="modal">Edytuj
+          </button>
+          <button type="button" class="btn btn-danger"
+                  data-dismiss="modal">Zamknij
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

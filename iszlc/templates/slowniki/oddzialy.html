@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}
+    Oddziały
+{% endblock %}
+
+{% block content %}
+
+<br>
+    <title>Oddziały</title>
+<br>
+      
+      <table class="table table-hover table-dark">
+          <thead>
+              <tr>
+          <!-- Your Columns HERE -->
+                  <th scope="col">ID</th>
+                  <th scope="col">Kod</th>
+                  <th scope="col">Oddział</th>  
+              </tr>
+          </thead>
+      
+          <!-- Your rows inside the table HERE: -->
+          {% for oddzial in Oddzialy %}
+      
+              <tr>
+                  <td>{{ oddzial.id_odd }}</td>
+                  <td>{{ oddzial.nazwa_odd }}</td>
+                  <td>
+                      <button class="btn btn-outline btn-warning">Zmień</button>
+      
+                      <a class="btn btn-outline btn-danger"
+                      href="#">Usuń</a>
+                      
+                  </td>
+              </tr>
+          {% endfor %}
+      </table> 
+
+{% endblock %}

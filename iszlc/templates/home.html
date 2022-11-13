@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}
+    Witaj w ISZLC
+{% endblock %}
+
+{% block content %}
+
+<title>I.nformatyczny S.ystem Z.arządzania L.ekami C.ytotoksycznymi</title>
+
+<head>
+    <meta http-equiv="refresh" content="2; iszlc"</meta>
+</head>
+
+<center>
+    <img src="{{ url_for('static', filename='images/intro.svg' )}}" width="">
+</center>
+
+{% endblock %}

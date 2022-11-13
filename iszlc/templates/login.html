@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}
+    Strona logowania
+{% endblock %}
+
+{% block content %}
+
+<title>LOGIN - Informatyczny System Zarządzania Lekami Cytotoksycznymi</title>
+<div class="row" style="margin-top:80px; margin-left:40px">
+    
+    <h1>
+    <b><text style="color:orangered;">I</b></text>nformatyczny
+    <b><text style="color:orangered;">S</b></text>ystem
+    <b><text style="color:orangered;">Z</b></text>arządzania
+    <b><text style="color:orangered;">L</b></text>ekami
+    <b><text style="color:orangered;">C</b></text>ytotoksycznymi
+    </h1>
+
+    <div class="col-4">
+    <body class="text-center">
+
+        <form method="POST" class="form-signin" style="color:white">
+            {{ form.hidden_tag() }}
+
+            <br><br>
+            <br><br>
+            {{ form.username.label() }}
+            {{ form.username(class="form-control", placeholder="Nazwa użytkownika") }}
+
+            {{ form.password.label() }}
+            {{ form.password(class="form-control", placeholder="Hasło") }}
+
+            <br><br>
+            <br>
+
+            {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+
+            <br><br>
+            <div class="checkbox mb-3">
+                <h6>Nie masz konta?</h6>
+                    <a class="btn btn-sm btn-secondary" href="{{ url_for('dodaj_uzytkownika_page') }}">Zarejestruj</a>
+       
+            </div>
+        </form>
+        </body>
+    </div>
+    <div class="col-6">
+        <br>
+        <img src="{{ url_for('static', filename='images/logo_iszlc.svg' )}}" width="">
+        <br>
+    </div>
+    <div style="position: absolute; bottom: 10px; right: 20px">
+        <text style="color: grey;">
+            <p align="right">
+                Wersja programu: <b>0.1</b>
+        <br>
+                Copyrights: <b>Piotr Kwiatosz</b>
+        </text></br>  
+    </div> 
+</body>
+{% endblock %}
