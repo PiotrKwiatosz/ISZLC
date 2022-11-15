@@ -19,30 +19,7 @@ def home_page():
 def iszlc_page():
     return render_template('iszlc.html')
 
-## LOGIN
-
-@app.route('/dodaj_uzytkownika', methods=['GET', 'POST'])
-def dodaj_uzytkownika_page():
-    form = RegisterUserForm()
-    if form.validate_on_submit():
-        uzytkownik_to_create = Uzytkownicy(username=form.username.data,
-                                            nazwisko=form.nazwisko.data,
-                                            imie=form.imie.data,
-                                            pwz=form.pwz.data,
-                                            tytul_naukowy=form.tytul_naukowy.data,
-                                            uprawnienia=form.uprawnienia.data,
-                                            password=form.password1.data)
-        db.session.add(uzytkownik_to_create)
-        db.session.commit()
-        login_user(uzytkownik_to_create)
-        flash(f"Użytkownik dodany pomyślnie! Jesteś teraz zalogowany jako {uzytkownik_to_create.username}", category='success')
-        return redirect(url_for('iszlc_page'))
-
-    if form.errors != {}: #Jesli nie ma bledow z validatora
-        for err_msg in form.errors.values():
-            flash(f'Bląd dodania użytkownika: {err_msg}', category='danger')
-
-    return render_template('dodaj/uzytkownika.html', form=form)           
+## LOGIN         
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
@@ -65,6 +42,40 @@ def logout_page():
     flash("Właśnie się wylogowałeś!", category='info')
     return redirect(url_for("home_page"))
 
+## UZYTKOWNICY
+
+@app.route('/dodaj_uzytkownika', methods=['GET', 'POST'])
+def dodaj_uzytkownika_page():
+    form = RegisterUserForm()
+    if form.validate_on_submit():
+        uzytkownik_to_create = Uzytkownicy(username=form.username.data,
+                                            nazwisko=form.nazwisko.data,
+                                            imie=form.imie.data,
+                                            pwz=form.pwz.data,
+                                            tytul_naukowy=form.tytul_naukowy.data,
+                                            uprawnienia=form.uprawnienia.data,
+                                            password=form.password1.data)
+        db.session.add(uzytkownik_to_create)
+        db.session.commit()
+        login_user(uzytkownik_to_create)
+        flash(f"Użytkownik dodany pomyślnie! Jesteś teraz zalogowany jako {uzytkownik_to_create.username}", category='success')
+        return redirect(url_for('iszlc_page'))
+
+    if form.errors != {}: #Jesli nie ma bledow z validatora
+        for err_msg in form.errors.values():
+            flash(f'Bląd dodania użytkownika: {err_msg}', category='danger')
+
+    return render_template('dodaj/uzytkownika.html', form=form)
+
+@app.route('/usun_uzytkownika', methods=['POST'])
+def usun_uzytkownika_path():
+    form =RegisterUserForm()
+    if form.validate_on_submit():
+        uzytkownik_to_delete = Uzytkownicy.query.filter_by(username=form.username.data).first()
+        db.session.delete(uzytkownik_to_delete)
+        db.session.commit()
+        flash(f"Użytkownik {uzytkownik_to_delete.username} usunięty", category='danger')
+        return redirect(url_for('slowniki/uzytkownicy.html'))   
 
 ## SZUKAJ
 
