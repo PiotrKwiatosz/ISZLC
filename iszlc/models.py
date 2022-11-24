@@ -37,10 +37,10 @@ class Pacjenci(db.Model):
     nazwisko = db.Column(db.String(60), nullable=False)
     pierwsze_imie = db.Column(db.String(30), nullable=False)
     drugie_imie = db.Column(db.String(30))
-    pesel = db.Column(db.Integer, nullable=False, unique=True)
+    pesel = db.Column(db.Integer, unique=True)
     data_urodzenia = db.Column(db.String(10))
     badanie = db.Column(db.String)
-    nr_w_badaniu = db.Column(db.Integer, nullable=False, unique=True)
+    nr_w_badaniu = db.Column(db.Integer, unique=True)
 
     def __repr__(self):
         return f'Pacjent {self.nazwisko}'
