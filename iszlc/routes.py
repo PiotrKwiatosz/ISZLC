@@ -2,8 +2,8 @@ from iszlc import app
 from flask import render_template, redirect, url_for, flash
 from iszlc.models import Pacjenci, Recepty, Leki, Roztwory 
 from iszlc.models import Uzytkownicy, Wlasciciele, Oddzialy
-from iszlc.forms import RegisterUserForm, LoginForm, SearchForm
-from iszlc.forms import RegisterPatientForm, RegisterPrescriptForm, RegisterDrugForm, RegisterSolutionsForm
+from iszlc.forms import RegisterUzytkownicyForm, LoginForm, SearchForm
+from iszlc.forms import RegisterPacjenciForm, RegisterReceptyForm, RegisterLekiForm, RegisterRoztworyForm
 from iszlc import db
 from flask_login import login_user, logout_user, login_required
 
@@ -23,7 +23,7 @@ def iszlc_page():
 
 @app.route('/dodaj_uzytkownika', methods=['GET', 'POST'])
 def dodaj_uzytkownika_page():
-    form = RegisterUserForm()
+    form = RegisterUzytkownicyForm()
     if form.validate_on_submit():
         uzytkownik_to_create = Uzytkownicy(username=form.username.data,
                                             nazwisko=form.nazwisko.data,
@@ -99,7 +99,7 @@ def leki_wyszukaj_page():
 
 @app.route('/dodaj_leki', methods=['GET', 'POST'])
 def dodaj_leki_page():
-    form = RegisterDrugForm()
+    form = RegisterLekiForm()
     if form.validate_on_submit():
         lek_to_create = Leki(ean=form.ean.data,
                             nazwa_handlowa=form.nazwa_handlowa.data,
@@ -119,7 +119,7 @@ def dodaj_leki_page():
 
 @app.route('/dodaj_recepta', methods=['GET', 'POST'])
 def dodaj_recepta_page():
-    form = RegisterPrescriptForm()
+    form = RegisterReceptyForm()
     if form.validate_on_submit():
         recepta_to_create = Recepty(nr_recepty=form.nr_recepty.data,
                                     data_wypis=form.data_wypis.data,
@@ -164,7 +164,7 @@ def recepty_drukuj_page():
 
 @app.route('/dodaj_pacjenta', methods=['GET', 'POST'])
 def dodaj_pacjenta_page():
-    form = RegisterPatientForm()
+    form = RegisterPacjenciForm()
     if form.validate_on_submit():
         pacjent_to_create = Pacjenci(nazwisko=form.nazwisko.data,
                                     pierwsze_imie=form.pierwsze_imie.data,
@@ -218,20 +218,3 @@ def slowniki_wlasciciel_edytuj_page():
 @app.route('/moduly')
 def modules_page():
     return render_template('modules.html')
-
-
-## PDF
-
-#from flask import render_template, make_response
-#import pdfkit
-
-# @app.route('/<name>/<location>') #http://127.0.0.1:5000/Piotr/Sosnowka
-# def pdf_page(name, location):
-#    rendered = render_template('pdf.html')
-#    pdf = pdfkit.from_string(rendered, False)
-
-#    response = make_response(pdf)
-#    response.headers['Content-Type'] = 'application/pdf'
-#    response.headers['Content-Disposition'] = 'attachment; filename=output.pdf'
-
-#    return respone
