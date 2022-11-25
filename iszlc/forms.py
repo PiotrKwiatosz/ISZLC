@@ -4,7 +4,7 @@ from wtforms.validators import Length, EqualTo, DataRequired, ValidationError
 from iszlc.models import Uzytkownicy, Pacjenci, Recepty, Leki, Roztwory
 
 ## UZYTKOWNIK
-class RegisterUserForm(FlaskForm):
+class RegisterUzytkownicyForm(FlaskForm):
     def validate_username(self, username_to_check):
         username = Uzytkownicy.query.filter_by(username=username_to_check.data).first()
         if username:
@@ -36,7 +36,7 @@ class SearchForm(FlaskForm):
 
 
 ## PACJENT
-class RegisterPatientForm(FlaskForm):
+class RegisterPacjenciForm(FlaskForm):
     nazwisko = StringField(label='Nazwisko:', validators=[Length(min=3, max=60), DataRequired()])
     def validate_pesel(self, nazwisko_to_check):
         nazwisko = Pacjenci.query.filter_by(nazwisko=nazwisko_to_check.data).first()
@@ -78,7 +78,7 @@ class RegisterPatientForm(FlaskForm):
     submit = SubmitField(label='Dodaj!')
 
 ## RECEPTY
-class RegisterPrescriptForm(FlaskForm):
+class RegisterReceptyForm(FlaskForm):
     def validate_nr_recepty(self, nr_recepty_to_check):
         nr_recepty = Recepty.query.filter_by(nr_recepty=nr_recepty_to_check.data).first()
         if nr_recepty:
@@ -101,7 +101,7 @@ class RegisterPrescriptForm(FlaskForm):
     submit = SubmitField(label='Dodaj!')
 
 ## LEKI
-class RegisterDrugForm(FlaskForm):
+class RegisterLekiForm(FlaskForm):
     def validate_nazwisko(self, nazwa_miedzynarodowa_to_check):
         nazwa_miedzynarodowa = Leki.query.filter_by(nazwa_miedzynarodowa=nazwa_miedzynarodowa_to_check.data).first()
         if nazwa_miedzynarodowa:
@@ -123,7 +123,7 @@ class RegisterDrugForm(FlaskForm):
     submit = SubmitField(label='Dodaj!')
 
 ## ROZTWORY
-class RegisterSolutionsForm(FlaskForm):
+class RegisterRoztworyForm(FlaskForm):
     def validate_nazwa_handlowa(self, nazwa_handlowa_to_check):
         nazwa_handlowa = Roztwory.query.filter_by(nazwa_handlowa=nazwa_handlowa_to_check.data).first()
         if nazwa_handlowa:
