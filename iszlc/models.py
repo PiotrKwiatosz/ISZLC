@@ -8,7 +8,7 @@ def load_user(id_uzytkownik):
     return Uzytkownicy.query.get(id_uzytkownik)
 
 class Uzytkownicy(db.Model, UserMixin):
-    id_uzytkownik = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), nullable=False, unique=True)
     nazwisko = db.Column(db.String(60))
     imie = db.Column(db.String(30))
@@ -18,7 +18,7 @@ class Uzytkownicy(db.Model, UserMixin):
     password_hash = db.Column(db.String(60), nullable=False)
     
     def get_id(self):
-           return (self.id_uzytkownik)
+           return (self.id)
 
     @property
     def password(self):
@@ -33,7 +33,7 @@ class Uzytkownicy(db.Model, UserMixin):
 ##
 
 class Pacjenci(db.Model):
-    id_pacjent = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True, unique=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True, unique=True)
     nazwisko = db.Column(db.String(60), nullable=False)
     pierwsze_imie = db.Column(db.String(30), nullable=False)
     drugie_imie = db.Column(db.String(30))
@@ -46,15 +46,15 @@ class Pacjenci(db.Model):
         return f'Pacjent {self.nazwisko}'
 
 class Recepty(db.Model):
-    id_recepta = db.Column(db.Integer(), primary_key=True, nullable=False, autoincrement=True, unique=True)
+    id = db.Column(db.Integer(), primary_key=True, nullable=False, autoincrement=True, unique=True)
     nr_recepty = db.Column(db.Integer(), nullable=False, unique=True)
     data_wypis = db.Column(db.String(), nullable=True, unique=False)
     data_wyprod = db.Column(db.String(), nullable=True, unique=False)
     data_pod = db.Column(db.String(), nullable=True, unique=False)
-    id_pacjent = db.Column(db.String(), db.ForeignKey('Pacjenci.id_pacjent'))
-    id_odd = db.Column(db.String(), db.ForeignKey('Oddzialy.id_odd'))
-    id_lek = db.Column(db.String(), db.ForeignKey('Leki.id_lek'))
-    id_roztwor = db.Column(db.String(), db.ForeignKey('Roztwory.id_roztwor'))
+    pacjent_id = db.Column(db.String(), db.ForeignKey('Pacjenci.id_pacjent'))
+    odd_id = db.Column(db.String(), db.ForeignKey('Oddzialy.id_odd'))
+    lek_id = db.Column(db.String(), db.ForeignKey('Leki.id_lek'))
+    roztwor_id = db.Column(db.String(), db.ForeignKey('Roztwory.id_roztwor'))
     droga_pod = db.Column(db.String(), nullable=True, unique=False)
     predkosc_pod = db.Column(db.String(), nullable=True, unique=False)
     data_waz = db.Column(db.String(), nullable=True, unique=False)
@@ -65,7 +65,7 @@ class Recepty(db.Model):
         return f'Recepta {self.nr_recepty}'
 
 class Leki(db.Model):
-    id_lek = db.Column(db.Integer(), primary_key=True, autoincrement=True, nullable=False, unique=True)
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True, nullable=False, unique=True)
     ean = db.Column(db.String(length=4), nullable=True, unique=True)
     nazwa_handlowa = db.Column(db.String(), nullable=True, unique=False)
     nazwa_miedzynarodowa = db.Column(db.String(), nullable=True, unique=False)
@@ -86,7 +86,7 @@ class Leki(db.Model):
         return f'Lek {self.nazwa_handlowa}'
 
 class Roztwory(db.Model):
-    id_roztwor = db.Column(db.Integer(), primary_key=True, autoincrement=True, nullable=False, unique=True)
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True, nullable=False, unique=True)
     ean = db.Column(db.String(length=4), nullable=True, unique=True)
     nazwa_handlowa = db.Column(db.String(), nullable=True)
     nazwa_miedzynarodowa = db.Column(db.String(), nullable=True, unique=False)
@@ -116,7 +116,7 @@ class Wlasciciele(db.Model):
         return f'Właściciel {self.nazwa}'
 
 class Oddzialy(db.Model):
-    id_odd = db.Column(db.Integer(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True)
     nazwa_odd = db.Column(db.String(length=30), nullable=True, unique=False)
 
     def __repr__(self):
