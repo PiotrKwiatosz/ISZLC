@@ -40,7 +40,8 @@
                 <button class="btn btn-outline btn-warning">Zmień</button>
             </td>
             <td>
-                <button class="btn btn-outline btn-danger" data-toggle="modal" data-target="#Modal-MoreInfo-#">Usun</button>
+                <a class="btn btn-outline btn-danger" 
+                href="{{ url_for('usun_uzytkownika_page') }}">Usuń</a>
             </td>
         </tr>
     {% endfor %}
