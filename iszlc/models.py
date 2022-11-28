@@ -103,7 +103,7 @@ class Roztwory(db.Model):
     droga_pod = db.Column(db.String(), nullable=True, unique=False)
     okres_waz_prod = db.Column(db.String(), nullable=True, unique=False)
     temp_prz_prod = db.Column(db.String(), nullable=True, unique=False)
-    Recepty = db.relationship('Recepty', backref='roztwory')
+    Recepty = db.relationship('Recepty', backref='roztwor')
 
     def __repr__(self):
         return f'Roztwory {self.nazwa_handlowa}'
@@ -120,8 +120,8 @@ class Wlasciciele(db.Model):
 
 class Oddzialy(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
-    nazwa_odd = db.Column(db.String(length=30), nullable=True, unique=False)
-    Recepty = db.relationship('Recepty', backref='oddzial')
+    nazwa = db.Column(db.String(length=30), nullable=True, unique=False)
+    Recepty = db.relationship('Recepty', backref='odd')
 
     def __repr__(self):
         return f'Oddział {self.nazwa}'
