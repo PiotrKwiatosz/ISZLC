@@ -29,11 +29,16 @@
         <th scope="col">Data wypisania</th>
         <th scope="col">Data wyprodukowania</th>
         <th scope="col">Data podania</th>
-        <th scope="col">ID pacjenta</th>
-        <th scope="col">ID oddziału</th>
-        <th scope="col">ID leku</th>
-        <th scope="col">ID roztworu</th>
+        <th scope="col">Nazwisko</th>
+        <th scope="col">Pierwsze imie</th>
+        <th scope="col">Drugie imie</th>
+        <th scope="col">PESEL</th>
+        <th scope="col">Oddział</th>
+        <th scope="col">Nazwa leku</th>
+        <th scope="col">Nazwa leku (międzynarodowa)</th>
         <th scope="col">Droga podania</th>
+        <th scope="col">Nazwa roztworu</th>
+        <th scope="col">Producent</th>
         <th scope="col">Prędkość podania</th>
         <th scope="col">Data ważności</th>
         <th scope="col">Godzina ważności</th>
@@ -42,31 +47,64 @@
     </thead>
   
          <!-- Your rows inside the table HERE: -->
-            {% for recepta in Recepty %}
+                {% for recepta in Recepty %}
 
                 <tr>
                     <td>{{ recepta.nr_recepty }}</td>
                     <td>{{ recepta.data_wypis }}</td>
                     <td>{{ recepta.data_wyprod }}</td>
                     <td>{{ recepta.data_pod }}</td>
-                    <td>{{ recepta.id_pacjent }}</td>
-                    <td>{{ recepta.id_odd }}</td>
-                    <td>{{ recepta.id_lek }}</td>
-                    <td>{{ recepta.id_roztwor }}</td>
+
+                {% endfor %}
+                {% for pacjent in Pacjenci %}
+
+                    <td>{{ pacjent.nazwisko }}</td>
+                    <td>{{ pacjent.pierwsze_imie }}</td>
+                    <td>{{ pacjent.drugie_imie }}</td>
+                    <td>{{ pacjent.pesel }}</td>
+
+                {% endfor %}
+                {% for oddzial in Oddzialy %}
+
+                    <td>{{ oddzial.nazwa }}</td>
+
+                {% endfor %}      
+                {% for lek in Leki %}
+
+                    <td>{{ lek.nazwa_handlowa }}</td>
+                    <td>{{ lek.nazwa_miedzynarodowa }}</td>
+
+                {% endfor %}    
+                {% for recepta in Recepty %}
+
                     <td>{{ recepta.droga_pod }}</td>
+
+                {% endfor %}
+                {% for roztwor in Roztwory %}
+
+                    <td>{{ roztwor.nazwa_handlowa }}</td>
+
+                {% endfor %}
+                {% for lek in Leki %}
+
+                    <td>{{ lek.producent }}</td>
+
+                {% endfor %}
+                {% for recepta in Recepty %}
+
                     <td>{{ recepta.predkosc_pod }}</td>
                     <td>{{ recepta.data_waz }}</td>
                     <td>{{ recepta.godz_waz }}</td>
                     <td>{{ recepta.zatwierdzony }}</td>
                     <td>
+
+                {% endfor %}
                       <button class="btn btn-outline btn-warning">Zmień</button>
       
-                      <a class="btn btn-outline btn-danger"
-                      href="#">Usuń</a>
+                      <a class="btn btn-outline btn-danger" href="#">Usuń</a>
                       
                   </td>  
-                </tr>
-            {% endfor %}   
+                </tr>   
   </table>   
           </div>
       </form>
