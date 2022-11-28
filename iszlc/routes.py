@@ -177,9 +177,18 @@ def recepty_szukaj_page():
 
 @app.route('/recepty_wyszukaj')
 def recepty_wyszukaj_page():
-#    recepta = Recepty.query.all()
-    all = Recepta.query.all()
-    return render_template('recepty/wyszukaj.html', Recepta=all)
+    recepta = Recepty.query.all()
+    pacjent = Pacjenci.query.all()
+    lek = Leki.query.all()
+    oddzial = Oddzialy.query.all()
+    roztwor = Roztwory.query.all()
+#   all = Recepta.query.all()
+    return render_template('recepty/wyszukaj.html', 
+    Recepty=recepta, 
+    Pacjenci=pacjent,
+    Leki=lek,
+    Oddzialy=oddzial,
+    Roztwory=roztwor)
 
 @app.route('/recepty_drukuj')
 def recepty_drukuj_page():
