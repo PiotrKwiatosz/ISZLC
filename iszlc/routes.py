@@ -1,9 +1,9 @@
 from iszlc import app
 from flask import render_template, redirect, url_for, flash
-from iszlc.models import Pacjenci, Recepty, Leki, Roztwory 
+from iszlc.models import Pacjenci, Recepty, Leki, Roztwory, Recepta 
 from iszlc.models import Uzytkownicy, Wlasciciele, Oddzialy
-from iszlc.forms import RegisterUserForm, LoginForm, SearchForm
-from iszlc.forms import RegisterPatientForm, RegisterPrescriptForm, RegisterDrugForm, RegisterSolutionsForm
+from iszlc.forms import RegisterUzytkownicyForm, LoginForm, SearchForm
+from iszlc.forms import RegisterPacjenciForm, RegisterReceptyForm, RegisterLekiForm, RegisterRoztworyForm
 from iszlc import db
 from flask_login import login_user, logout_user, login_required
 
@@ -46,7 +46,7 @@ def logout_page():
 
 @app.route('/dodaj_uzytkownika', methods=['GET', 'POST'])
 def dodaj_uzytkownika_page():
-    form = RegisterUserForm()
+    form = RegisterUzytkownicyForm()
     if form.validate_on_submit():
         uzytkownik_to_create = Uzytkownicy(username=form.username.data,
                                             nazwisko=form.nazwisko.data,
@@ -67,15 +67,30 @@ def dodaj_uzytkownika_page():
 
     return render_template('dodaj/uzytkownika.html', form=form)
 
-@app.route('/usun_uzytkownika', methods=['POST'])
-def usun_uzytkownika_path():
-    form =RegisterUserForm()
-    if form.validate_on_submit():
-        uzytkownik_to_delete = Uzytkownicy.query.filter_by(username=form.username.data).first()
-        db.session.delete(uzytkownik_to_delete)
-        db.session.commit()
-        flash(f"Użytkownik {uzytkownik_to_delete.username} usunięty", category='danger')
-        return redirect(url_for('slowniki/uzytkownicy.html'))   
+#@app.route('/usun_uzytkownika')
+#def usun_uzytkownika_page():
+#    uzytkownik_to_delete = Uzytkownicy.query.get_or_404(id_uzytkownik)
+#    db.session.delete(uzytkownik_to_delete)
+#    db.session.commit()
+#    return redirect(url_for('uzytkownicy'))
+
+#    uzytkownik_to_delete = Uzytkownicy(username=form.username.data).first()
+#    username = None
+#    form=RegisterUserForm()
+#    try:     
+#        db.session.delete(uzytkownik_to_delete)
+#        db.session.commit()
+#        flash(f"Użytkownik {uzytkownik_to_delete.username} usunięty", category='danger')
+#        return redirect('slowniki/uzytkownicy.html',
+#        form=form,
+#        username=username,
+#        uzytkownik_to_delete=uzytkownik_to_delete) 
+#    except:
+#        flash(f"Nie można tego zrobić")
+#        return redirect('slowniki/uzytkownicy.html',
+#        form=form,
+#        Uzytkownicy=username,
+#        uzytkownik_to_delete=uzytkownik_to_delete)
 
 ## SZUKAJ
 
@@ -99,7 +114,7 @@ def leki_szukaj():
 		return render_template('leki/szukaj.html', 		 
         form=form, 		 
         searched = Leki.searched,
-		Leki = lek)
+		Leki=lek)
 
 ## LEKI
 
@@ -110,7 +125,7 @@ def leki_wyszukaj_page():
 
 @app.route('/dodaj_leki', methods=['GET', 'POST'])
 def dodaj_leki_page():
-    form = RegisterDrugForm()
+    form = RegisterLekiForm()
     if form.validate_on_submit():
         lek_to_create = Leki(ean=form.ean.data,
                             nazwa_handlowa=form.nazwa_handlowa.data,
@@ -130,7 +145,7 @@ def dodaj_leki_page():
 
 @app.route('/dodaj_recepta', methods=['GET', 'POST'])
 def dodaj_recepta_page():
-    form = RegisterPrescriptForm()
+    form = RegisterReceptyForm()
     if form.validate_on_submit():
         recepta_to_create = Recepty(nr_recepty=form.nr_recepty.data,
                                     data_wypis=form.data_wypis.data,
@@ -162,8 +177,9 @@ def recepty_szukaj_page():
 
 @app.route('/recepty_wyszukaj')
 def recepty_wyszukaj_page():
-    recepta = Recepty.query.all()
-    return render_template('recepty/wyszukaj.html', Recepty=recepta)
+#    recepta = Recepty.query.all()
+    all = Recepta.query.all()
+    return render_template('recepty/wyszukaj.html', Recepta=all)
 
 @app.route('/recepty_drukuj')
 def recepty_drukuj_page():
@@ -175,7 +191,7 @@ def recepty_drukuj_page():
 
 @app.route('/dodaj_pacjenta', methods=['GET', 'POST'])
 def dodaj_pacjenta_page():
-    form = RegisterPatientForm()
+    form = RegisterPacjenciForm()
     if form.validate_on_submit():
         pacjent_to_create = Pacjenci(nazwisko=form.nazwisko.data,
                                     pierwsze_imie=form.pierwsze_imie.data,
