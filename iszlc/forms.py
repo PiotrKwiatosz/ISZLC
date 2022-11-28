@@ -88,7 +88,7 @@ class RegisterReceptyForm(FlaskForm):
     data_wypis = StringField(label='Data wypisania:', validators=[Length(min=2, max=12), DataRequired()])
     data_wyprod = StringField(label='Data wyprodukowania:', validators=[Length(min=2, max=12), DataRequired()])
     data_pod = StringField(label='Data podania:', validators=[Length(min=2, max=12), DataRequired()])
-    pacjent_od = StringField(label='Numer pacjenta:', validators=[DataRequired()])
+    pacjent_id = StringField(label='Numer pacjenta:', validators=[DataRequired()])
     odd_id = StringField(label='Numer oddziału:', validators=[DataRequired()])
     lek_id = StringField(label='Numer leku:', validators=[DataRequired()])
     roztwor_id = StringField(label='Numer roztworu:', validators=[DataRequired()])
