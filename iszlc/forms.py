@@ -4,7 +4,7 @@ from wtforms.validators import Length, EqualTo, DataRequired, ValidationError
 from iszlc.models import Uzytkownicy, Pacjenci, Recepty, Leki, Roztwory
 
 ## UZYTKOWNIK
-class RegisterUserForm(FlaskForm):
+class RegisterUzytkownicyForm(FlaskForm):
     def validate_username(self, username_to_check):
         username = Uzytkownicy.query.filter_by(username=username_to_check.data).first()
         if username:
@@ -36,17 +36,7 @@ class SearchForm(FlaskForm):
 
 
 ## PACJENT
-class RegisterPatientForm(FlaskForm):
-    def validate_pesel(self, pesel_to_check):
-        pesel = Pacjenci.query.filter_by(pesel=pesel_to_check.data).first()
-        if pesel:
-            raise ValidationError('Pacjent z podanym PESELem aktualnie już jest! Prosze sprobuj inny PESEL')
-
-    def validate_nr_w_badaniu(self, nr_w_badaniu_to_check):
-        nr_w_badaniu = Pacjenci.query.filter_by(nr_w_badaniu=nr_w_badaniu_to_check.data).first()
-        if nr_w_badaniu:
-            raise ValidationError('Podany numer aktualnie istnieje! Prosze sprobuj inny numer')
-
+class RegisterPacjenciForm(FlaskForm):
     nazwisko = StringField(label='Nazwisko:', validators=[Length(min=3, max=60), DataRequired()])
     def validate_pesel(self, nazwisko_to_check):
         nazwisko = Pacjenci.query.filter_by(nazwisko=nazwisko_to_check.data).first()
@@ -59,27 +49,36 @@ class RegisterPatientForm(FlaskForm):
         if pierwsze_imie:
             raise ValidationError('Podane pierwsze imię jest za krótkie! Musi mieć od 2 do 30 znaków. Prosze sprobuj jeszcze raz')
 
-    drugie_imie = StringField(label='Drugie imię:', validators=[Length(min=2, max=30)])
+    drugie_imie = StringField(label='Drugie imię:')
     def validate_drugie_imie(self, drugie_imie_to_check):
         drugie_imie = Pacjenci.query.filter_by(drugie_imie=drugie_imie_to_check.data).first()
         if drugie_imie:
             raise ValidationError('Podane drugie imię jest za krótkie! Musi mieć od 2 do 30 znaków. Prosze sprobuj jeszcze raz')
 
-    pesel = StringField(label='PESEL:', validators=[Length(min=10), DataRequired()])
+    pesel = StringField(label='PESEL:')
+    def validate_pesel(self, pesel_to_check):
+        pesel = Pacjenci.query.filter_by(pesel=pesel_to_check.data).first()
+        if pesel:
+            raise ValidationError('Pacjent z podanym PESELem aktualnie już jest! Prosze sprobuj inny PESEL')
 
-    data_urodzenia = StringField(label='Data urodzenia:', validators=[Length(min=8, max=10)])
+    data_urodzenia = StringField(label='Data urodzenia:')
     def validate_data_urodzenia(self, data_urodzenia_to_check):
         data_urodzenia = Pacjenci.query.filter_by(data_urodzenia=data_urodzenia_to_check.data).first()
         if data_urodzenia:
             raise ValidationError('Data urodzenia nie może być pusta! I ma mieć od 8 do 10 znaków. Prosze sprobuj jeszcze raz')
 
-    badanie = StringField(label='Badanie:', validators=[DataRequired()])
+    badanie = StringField(label='Badanie:')
+
     nr_w_badaniu = StringField(label='Numer w badaniu:', validators=[Length(min=1), DataRequired()])
+    def validate_nr_w_badaniu(self, nr_w_badaniu_to_check):
+        nr_w_badaniu = Pacjenci.query.filter_by(nr_w_badaniu=nr_w_badaniu_to_check.data).first()
+        if nr_w_badaniu:
+            raise ValidationError('Podany numer aktualnie istnieje! Prosze sprobuj inny numer')
     
     submit = SubmitField(label='Dodaj!')
 
 ## RECEPTY
-class RegisterPrescriptForm(FlaskForm):
+class RegisterReceptyForm(FlaskForm):
     def validate_nr_recepty(self, nr_recepty_to_check):
         nr_recepty = Recepty.query.filter_by(nr_recepty=nr_recepty_to_check.data).first()
         if nr_recepty:
@@ -89,10 +88,10 @@ class RegisterPrescriptForm(FlaskForm):
     data_wypis = StringField(label='Data wypisania:', validators=[Length(min=2, max=12), DataRequired()])
     data_wyprod = StringField(label='Data wyprodukowania:', validators=[Length(min=2, max=12), DataRequired()])
     data_pod = StringField(label='Data podania:', validators=[Length(min=2, max=12), DataRequired()])
-    id_pacjent = StringField(label='Numer pacjenta:', validators=[DataRequired()])
-    id_odd = StringField(label='Numer oddziału:', validators=[DataRequired()])
-    id_lek = StringField(label='Numer leku:', validators=[DataRequired()])
-    id_roztwor = StringField(label='Numer roztworu:', validators=[DataRequired()])
+    pacjent_od = StringField(label='Numer pacjenta:', validators=[DataRequired()])
+    odd_id = StringField(label='Numer oddziału:', validators=[DataRequired()])
+    lek_id = StringField(label='Numer leku:', validators=[DataRequired()])
+    roztwor_id = StringField(label='Numer roztworu:', validators=[DataRequired()])
     droga_pod = StringField(label='Droga podania:')
     predkosc_pod = StringField(label='Prędkość podania:')
     data_waz = StringField(label='Data ważności:', validators=[Length(min=4), DataRequired()])
@@ -102,7 +101,7 @@ class RegisterPrescriptForm(FlaskForm):
     submit = SubmitField(label='Dodaj!')
 
 ## LEKI
-class RegisterDrugForm(FlaskForm):
+class RegisterLekiForm(FlaskForm):
     def validate_nazwisko(self, nazwa_miedzynarodowa_to_check):
         nazwa_miedzynarodowa = Leki.query.filter_by(nazwa_miedzynarodowa=nazwa_miedzynarodowa_to_check.data).first()
         if nazwa_miedzynarodowa:
@@ -124,7 +123,7 @@ class RegisterDrugForm(FlaskForm):
     submit = SubmitField(label='Dodaj!')
 
 ## ROZTWORY
-class RegisterSolutionsForm(FlaskForm):
+class RegisterRoztworyForm(FlaskForm):
     def validate_nazwa_handlowa(self, nazwa_handlowa_to_check):
         nazwa_handlowa = Roztwory.query.filter_by(nazwa_handlowa=nazwa_handlowa_to_check.data).first()
         if nazwa_handlowa:
