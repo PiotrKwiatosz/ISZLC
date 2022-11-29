@@ -151,14 +151,14 @@ def dodaj_recepta_page():
                                     data_wypis=form.data_wypis.data,
                                     data_wyprod=form.data_wyprod.data,
                                     data_pod=form.data_pod.data,
-                                    id_pacjent=form.id_pacjent.data,
-                                    id_odd=form.id_odd.data,
-                                    id_lek=form.id_lek.data,
-                                    id_roztow=form.id_roztwor.dodaj_recepta_page,
+                                    pacjent_id=form.id_pacjent.data,
+                                    odd_id=form.id_odd.data,
+                                    lek_id=form.id_lek.data,
+                                    roztow_id=form.id_roztwor.data,
                                     droga_pod=form.droga_pod.data,
                                     predkosc_pod=form.predkosc_pod.data,
-                                    data_waznosci=form.data_waznosci.data,
-                                    godz_waznosci=form.godzina_waznosci.data,
+                                    data_waz=form.data_waznosci.data,
+                                    godz_waz=form.godzina_waznosci.data,
                                     zatwierdzony=form.zatwierdzony.data)
         db.session.add(recepta_to_create)
         db.session.commit()
