@@ -50,10 +50,6 @@ class RegisterPacjenciForm(FlaskForm):
             raise ValidationError('Podane pierwsze imię jest za krótkie! Musi mieć od 2 do 30 znaków. Prosze sprobuj jeszcze raz')
 
     drugie_imie = StringField(label='Drugie imię:')
-    def validate_drugie_imie(self, drugie_imie_to_check):
-        drugie_imie = Pacjenci.query.filter_by(drugie_imie=drugie_imie_to_check.data).first()
-        if drugie_imie:
-            raise ValidationError('Podane drugie imię jest za krótkie! Musi mieć od 2 do 30 znaków. Prosze sprobuj jeszcze raz')
 
     pesel = StringField(label='PESEL:')
     def validate_pesel(self, pesel_to_check):
