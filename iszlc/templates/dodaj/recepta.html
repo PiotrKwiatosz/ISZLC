@@ -12,30 +12,31 @@ Strona dodawania RECEPTY
             <h1 class="h3 mb-3 font-weight-normal">
                 Dodaj RECEPTE
             </h1>
+            <b>Kod:</b>
             <br>
             {{ form.nr_recepty.label() }}
-            {{ form.nr_recepty(class="form-control", placeholder="Numer recepty") }}
+            {{ form.nr_recepty(class="form-control", placeholder="Nr recepty") }}
 
             {{ form.data_wypis.label() }}
             {{ form.data_wypis(class="form-control", placeholder="Data wypisania") }}
 
             {{ form.data_wyprod.label() }}
-            {{ form.data_wyprod(class="form-control", placeholder="Data wyprodukowania") }}
+            {{ form.data_wyprod(class="form-control", placeholder="Data wykonania") }}
 
             {{ form.data_pod.label() }}
             {{ form.data_pod(class="form-control", placeholder="Data podania") }}
 
-            {{ form.id_pacjent.label() }}
-            {{ form.id_pacjent(class="form-control", placeholder="ID pacjenta") }}
+            {{ form.pacjent_id.label() }}
+            {{ form.pacjent_id(class="form-control", placeholder="ID pacjenta") }}
 
-            {{ form.id_odd.label() }}
-            {{ form.id_odd(class="form-control", placeholder="ID oddziału") }}
+            {{ form.odd_id.label() }}
+            {{ form.odd_id(class="form-control", placeholder="ID oddziału") }}
 
-            {{ form.id_lek.label() }}
-            {{ form.id_lek(class="form-control", placeholder="ID leku") }}
+            {{ form.lek_id.label() }}
+            {{ form.lek_id(class="form-control", placeholder="ID leku") }}
 
-            {{ form.id_roztwor.label() }}
-            {{ form.id_roztwor(class="form-control", placeholder="ID roztworu") }}
+            {{ form.roztwor_id.label() }}
+            {{ form.roztwor_id(class="form-control", placeholder="ID roztworu") }}
 
             {{ form.droga_pod.label() }}
             {{ form.droga_pod(class="form-control", placeholder="Droga podania") }}
@@ -44,13 +45,13 @@ Strona dodawania RECEPTY
             {{ form.predkosc_pod(class="form-control", placeholder="Prędkość podania") }}
 
             {{ form.data_waz.label() }}
-            {{ form.data_waz(class="form-control", placeholder="Data ważności") }}
+            {{ form.data_waz(class="form-control", placeholder="Ważność preparatu do dnia:") }}
 
             {{ form.godz_waz.label() }}
-            {{ form.godz_waz(class="form-control", placeholder="Godzina ważności") }}
+            {{ form.godz_waz(class="form-control", placeholder="Ważność preparatu do godziny:") }}
 
             {{ form.zatwierdzony.label() }}
-            {{ form.zatwierdzony(class="form-control", placeholder="Zatwierdzony") }}
+            {{ form.zatwierdzony(class="form-control", placeholder="Zatwierdzona") }}
             <br>
              <div class="checkbox mb-3">
             <br><br>
