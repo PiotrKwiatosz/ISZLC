@@ -1,11 +1,12 @@
 from iszlc import app
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from iszlc.models import Pacjenci, Recepty, Leki, Roztwory, Recepta 
 from iszlc.models import Uzytkownicy, Wlasciciele, Oddzialy
 from iszlc.forms import RegisterUzytkownicyForm, LoginForm, SearchForm
 from iszlc.forms import RegisterPacjenciForm, RegisterReceptyForm, RegisterLekiForm, RegisterRoztworyForm
 from iszlc import db
 from flask_login import login_user, logout_user, login_required
+from iszlc.forms import LekiSearchForm
 
 @app.route('/')
 @app.route('/home')
@@ -100,21 +101,47 @@ def base():
 	form = SearchForm()
 	return dict(form=form)
 
-@app.route('/leki_szukaj', methods=['POST'])
-def leki_szukaj():
-	form = SearchForm()
-	lek = Leki.query
-	if form.validate_on_submit():
-		# Get data from submitted form
-		lek.searched = form.searched.data
-		# Query the Database
-		Leki = Leki.filter(Leki.nazwa_handlowa.like('%' + Leki.searched + '%'))
-		Leki = Leki.order_by(Leki.nazwa_handlowa).all()
+#@app.route('/leki_szukaj', methods=['POST'])
+#def leki_szukaj():
+#	form = SearchForm()
+#	lek = Leki.query
+#	if form.validate_on_submit():
+#		# Get data from submitted form
+#		lek.searched = form.searched.data
+#		# Query the Database
+#		Leki = Leki.filter(Leki.nazwa_handlowa.like('%' + Leki.searched + '%'))
+#		Leki = Leki.order_by(Leki.nazwa_handlowa).all()
+#
+#		return render_template('leki/szukaj.html', 		 
+#        form=form, 		 
+#       searched = Leki.searched,
+#		Leki=lek)
 
-		return render_template('leki/szukaj.html', 		 
-        form=form, 		 
-        searched = Leki.searched,
-		Leki=lek)
+####
+
+@app.route('/leki_wyszukaj', methods=['GET', 'POST'])
+def leki_wyszukaj():
+    search = LekiSearchForm(request.form)
+    lek = Leki.query.all()
+    if request.method == 'POST':
+        return search_results(search)
+    return render_template('leki/wyszukaj.html', form=search, Leki=lek)
+
+@app.route('/results')
+def search_results(search):
+    results = []
+    search_string = search.data['search']
+    if search.data['search'] == '':
+        qry = Leki.query(Leki)
+        results = qry.query(all)
+    if not results:
+        flash('Nic nie znaleziono!')
+        return redirect(url_for('leki_wyszukaj_page'))
+    else:
+        # display results
+        return render_template('results.html', results=results)
+
+####
 
 ## LEKI
 
