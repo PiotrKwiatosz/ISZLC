@@ -9,11 +9,26 @@
 
 <br><br>
 
-<form method="POST" action="{{ url_for('leki_szukaj' )}}" class="d-flex">
-  {{ form.hidden_tag() }}
-  <input class="form-control me-2" type="search" placeholder="Szukaj:" aria-label="Szukaj:" name="searched">
-  <button class="btn btn-outline-secondary" type="submit">Szukaj:</button>
-</form>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+{% from "/leki/_formhelpers.html" import render_field %}
+<form method="POST" action="{{ url_for('leki_wyszukaj' )}}" class="d-flex">
+  
+    {{ render_field(form.select) }}
+    {{ render_field(form.search) }}
+  
+  <p><input type="submit" value="Szukaj">
+  </form>
+
 
 <br>
   <!-- Your columns inside the table HERE: -->
