@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import Form , SelectField, StringField, PasswordField, SubmitField
 from wtforms.validators import Length, EqualTo, DataRequired, ValidationError
 from iszlc.models import Uzytkownicy, Pacjenci, Recepty, Leki, Roztwory
+
 
 ## UZYTKOWNIK
 class RegisterUzytkownicyForm(FlaskForm):
@@ -33,6 +34,10 @@ class SearchForm(FlaskForm):
 	searched = StringField("Szukane:", validators=[DataRequired()])
 	submit = SubmitField("Szukaj!")
 
+class LekiSearchForm(Form):
+    choices = [('Leki', 'Leki')]
+    select = SelectField('Wyszukaj lek: ', choices=choices)
+    search = StringField('')
 
 
 ## PACJENT
