@@ -1,0 +1,5 @@
+To testing ISZLC firstly you must log in into it.
+To log into, please use:
+
+Username: Dym
+Password: qweasdzxc
