@@ -68,6 +68,8 @@ def dodaj_uzytkownika_page():
 
     return render_template('dodaj/uzytkownika.html', form=form)
 
+## USUN UZYTKOWNIKA
+
 #@app.route('/usun_uzytkownika')
 #def usun_uzytkownika_page():
 #    uzytkownik_to_delete = Uzytkownicy.query.get_or_404(id_uzytkownik)
@@ -100,6 +102,8 @@ def dodaj_uzytkownika_page():
 def base():
 	form = SearchForm()
 	return dict(form=form)
+
+## TEST - LEKI
 
 #@app.route('/leki_szukaj', methods=['POST'])
 #def leki_szukaj():
