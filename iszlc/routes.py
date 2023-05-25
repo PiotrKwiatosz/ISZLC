@@ -12,7 +12,7 @@ from flask_login import login_user, logout_user, login_required
 def home_page():
     return render_template('home.html')
 
-#### GLOWNE
+#### MAIN
 
 @app.route('/iszlc', methods=['GET', 'POST'])
 @login_required
@@ -68,7 +68,6 @@ def logout_page():
 
 ## SZUKAJ
 
-# Pass Stuff To Navbar
 @app.context_processor
 def base():
 	form = SearchForm()
@@ -158,8 +157,6 @@ def recepty_wyszukaj_page():
 def recepty_drukuj_page():
     return render_template('recepty/drukuj.html')
 
-## PRODUKCJA
-
 ## PACJENCI
 
 @app.route('/dodaj_pacjenta', methods=['GET', 'POST'])
@@ -188,8 +185,6 @@ def dodaj_pacjenta_page():
 def pacjenci_wyszukaj_page():
     pacjent = Pacjenci.query.all()
     return render_template('pacjenci/wyszukaj.html', Pacjenci=pacjent)
-
-## RAPORTY
 
 ## SLOWNIKI
 
