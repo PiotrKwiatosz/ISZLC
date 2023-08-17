@@ -7,9 +7,7 @@
 
 <title>Leki - Wyszukaj</title>
 
-<br><br>
-
-
+<!--
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class="flashes">
@@ -27,6 +25,14 @@
     {{ render_field(form.search) }}
   
   <p><input type="submit" value="Szukaj">
+  </form>
+-->
+
+  <br><br>
+  <form method="POST" action="{{url_for('leki_szukaj')}}" class="d-flex">
+    {{ form.hidden_tag() }}
+    <input class="form-control me-2" type="search" placeholder="Szukaj" aria-label="Search", name="searched">
+    <button class="btn btn-outline-secondary" type="submit">Szukaj</button>
   </form>
 
 
